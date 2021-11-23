@@ -3,16 +3,16 @@ from tkinter import ttk
   
 # Creating tkinter window
 window = tk.Tk()
-window.title('Combobox')
-window.geometry('500x250')
+window.title('Rgo Testing Program')
+window.geometry('500x350')
   
 # label text for title
-ttk.Label(window, text = "GFG Combobox Widget", 
+ttk.Label(window, text = "RGo Testing", 
           background = 'green', foreground ="white", 
           font = ("Times New Roman", 15)).grid(row = 0, column = 1)
   
 # label
-ttk.Label(window, text = "Select the Month :",
+ttk.Label(window, text = "Select the Site :",
           font = ("Times New Roman", 10)).grid(column = 0,
           row = 5, padx = 10, pady = 25)
   
