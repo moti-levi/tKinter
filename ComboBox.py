@@ -43,6 +43,8 @@ sitechoosen['values'] = (' January',
                           ' October',
                           ' November',
                           ' December')
+
+                          
 stationChoosen['values'] = (' 1', 
                           ' 2',
                           ' 3')  
