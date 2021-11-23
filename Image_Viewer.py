@@ -8,10 +8,10 @@ root.title('Image Viewer')
 
 my_img1 = ImageTk.PhotoImage(Image.open("Img/mevssoso.jpeg"))
 my_img2 = ImageTk.PhotoImage(Image.open("Img/moti.png"))
-my_img3 = ImageTk.PhotoImage(Image.open("Img/ori.jpeg"))
-my_img4 = ImageTk.PhotoImage(Image.open("Img/soso.jpeg"))
+#my_img3 = ImageTk.PhotoImage(Image.open("Img/ori.jpeg"))
+#my_img4 = ImageTk.PhotoImage(Image.open("Img/soso.jpeg"))
 
-image_list = [my_img1, my_img2, my_img3, my_img4]
+image_list = [my_img1, my_img2] # , my_img3, my_img4]
 
 
 
