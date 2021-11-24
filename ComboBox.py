@@ -1,60 +1,53 @@
 import tkinter as tk
 from tkinter import ttk
-  
+_gcmbPaddy=10
 # Creating tkinter window
 window = tk.Tk()
-window.title('Rgo Testing Program')
-window.geometry('500x350')
-  
-# label text for title
-ttk.Label(window, text = "RGo Testing", 
-          background = 'green', foreground ="white", 
-          font = ("Times New Roman", 15)).grid(row = 0, column = 1)
-  
-# label
-ttk.Label(window, text = "Site :",
-          font = ("Times New Roman", 10)).grid(column = 0,
-          row = 1,  column = 0,padx = 10, pady = 25)
+window.geometry('350x250')
+# Label
+ttk.Label(window, text = "Site:",
+		font = ("Times New Roman", 10)).grid(column = 0,
+		row = 0, padx = 10, pady = _gcmbPaddy)
 
 
-# label
-ttk.Label(window, text = "Station :",
-          font = ("Times New Roman", 10)).grid(column = 0,
-          row = 2, column = 0,padx = 10, pady = 25)
-  
-# Combobox creation
-site = tk.StringVar()
-sitechoosen = ttk.Combobox(window, width = 27, textvariable = site)
+ttk.Label(window, text = "station :",
+		font = ("Times New Roman", 10)).grid(column = 0,
+		row = 1, padx = 10, pady = _gcmbPaddy)
 
-# Combobox creation
-station = tk.StringVar()
-stationChoosen = ttk.Combobox(window, width = 27, textvariable = station)
-  
+ttk.Label(window, text = "Module Type :",
+		font = ("Times New Roman", 10)).grid(column = 0,
+		row = 2, padx = 10, pady = _gcmbPaddy)
+
+
+n = tk.StringVar()
+station = ttk.Combobox(window, width = 27,
+							textvariable = n)
+
+n1 = tk.StringVar()
+st = ttk.Combobox(window, width = 27,
+							textvariable = n1)
+
+n2 = tk.StringVar()
+module = ttk.Combobox(window, width = 27,
+							textvariable = n1)
+
 # Adding combobox drop down list
-sitechoosen['values'] = (' January', 
-                          ' February',
-                          ' March',
-                          ' April',
-                          ' May',
-                          ' June',
-                          ' July',
-                          ' August',
-                          ' September',
-                          ' October',
-                          ' November',
-                          ' December')
+station['values'] = (' 1',
+						' 2',
+						' 3')						)
 
-                          
-stationChoosen['values'] = (' 1', 
-                          ' 2',
-                          ' 3')  
+st['values'] = (' 1',
+'2','3')
 
+module['values'] = (' 1',
+'2','3')
 
-sitechoosen.grid(column = 1, row = 2)
-sitechoosen.current()
+st.grid(column = 1, row = 0)
+station.grid(column = 1, row = 1)
+module.grid(column = 1, row = 2)
 
-stationChoosen.grid(column = 2, row = 2)
-stationChoosen.current()
-
-
+# Shows february as a default value
+st.current(1)
+station.current(1)
+module.current(1)
 window.mainloop()
