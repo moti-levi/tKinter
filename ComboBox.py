@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
-
+import json
 
 # function to open a new window
 # on a button click
@@ -107,10 +107,6 @@ module.grid(column = 1, row = 2)
 
 close = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white').grid(column = 2, row = 3)
 
-# Shows default value
-st.current(1)
-stn.current(1)
-module.current(1)
 
 
 mw.mainloop()
