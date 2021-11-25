@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
-import json
+from readJson import JsonReader as Rj
 
 # function to open a new window
 # on a button click
@@ -71,5 +71,6 @@ st.current(1)
 stn.current(1)
 module.current(1)
 
+data=Rj.ReadJson('data.json')
 
 mw.mainloop()
