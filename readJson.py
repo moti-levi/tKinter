@@ -1,7 +1,6 @@
-# Shows default value
-st.current(1)
-stn.current(1)
-module.current(1)
+import json
+
+
 
 # Opening JSON file
 f = open('data.json')
