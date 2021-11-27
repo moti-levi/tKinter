@@ -8,8 +8,11 @@ from readJson import JsonReader as Rj
 _gcmbPaddy=10
 # Creating tkinter main window
 mw = tk.Tk()
-mw.geometry('350x280')
+mw.geometry('360x280')
 mw.title('R Go Testing Platform')
+#To Do Add R-go icon
+# mw.iconbitmap('Rgo.icon')
+   
 mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 
 e = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
@@ -71,6 +74,6 @@ st.current(1)
 stn.current(1)
 module.current(1)
 
-data=Rj.ReadJson('data.json')
+data=Rj.ReadJson('DataFiles\data.json')
 
 mw.mainloop()
