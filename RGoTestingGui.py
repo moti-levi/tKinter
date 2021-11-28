@@ -57,7 +57,6 @@ txtTlvSn.grid(row=6, column=1,padx=10, pady=_gcmbPaddy)
 txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
 txtSomsn.grid(row=7, column=1,padx=10, pady=_gcmbPaddy)
-
 #endregion
 
 
