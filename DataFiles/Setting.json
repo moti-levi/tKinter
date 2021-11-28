@@ -1,3 +1,4 @@
+{
 "General": 
 {
    "Tester Type": "Module Calibration",
@@ -5,4 +6,5 @@
    "Language": "English",
    "Show R&D button": "yes",
    "Show Retry Failures button": "yes"
+}
 }
