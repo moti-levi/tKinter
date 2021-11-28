@@ -7,12 +7,29 @@ from readJson import JsonReader as Rj
 _gcmbPaddy=10
 _BtnWidth=8
 _row_num=0
+_TestType=""
+_Version=""
+_generaldate=any
+_showRDBtn:bool
+_ShowRetryFailuresbtn:bool
+
 #endregion
+
+
+#reion Read Json
+data=Rj.ReadJson('DataFiles\Setting.json')
+_generaldate=data.get("General")
+_TestType=_generaldate.get("Tester Type")
+_Version=_generaldate.get("Version")
+_showRDBtn=_generaldate.get("Show R&D button")
+_ShowRetryFailuresbtn=_generaldate.get("Show Retry Failures button")
+#endregion
+
 
 #region Creating tkinter main window
 mw = tk.Tk()
 mw.geometry('400x400')
-mw.title('R-Go Housing testing (v1.0)')
+mw.title('R-Go Housing testing ' + _Version)
 
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
@@ -42,10 +59,7 @@ txtSomsn.grid(row=7, column=1,padx=10, pady=_gcmbPaddy)
 
 #endregion
 
-#reion Read Json
-data=Rj.ReadJson('DataFiles\data.json')
-TestData=data.get("Module Calibration")
-#endregion
+
 #region fuction
 
 def Button_Clicker1(newnum):
