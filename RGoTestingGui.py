@@ -9,7 +9,7 @@ _gcmbPaddy=10
 # Creating tkinter main window
 mw = tk.Tk()
 mw.geometry('360x280')
-mw.title('R Go Testing Platform')
+mw.title('R-Go Housing testing (v1.0)')
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
    
@@ -67,7 +67,19 @@ module = ttk.Combobox(mw, width = 27,textvariable = n2)
 module['values'] = ('1','2','3')
 module.grid(column = 1, row = 2)
 
-close = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white').grid(column = 2, row = 3)
+
+
+
+
+#button opperation
+
+btnRead = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white').grid(column = 2, row = 3)
+
+btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: Button_Clicker(1),bg='#009999', fg='white').grid(column = 0, row = 4)
+
+btnTestStart = tk.Button(mw, text='Test', command=lambda: Button_Clicker(1),bg='green', fg='white',width = 15).grid(row=4, column=1, columnspan=2)
+
+
 
 # Shows default value
 st.current(1)
