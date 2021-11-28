@@ -30,11 +30,16 @@ _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
 _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
-#Read setting Json
+
+#Read SuiteDefinition Json
 definitionData=Rjdefinition.JsonDefinitionReader.ReadJsonDefinition('DataFiles\Test_Suite_definition.json',_TestType)
+_SelectModuleType=1 if definitionData.get("Select Module Type")=="yes" else 0
+_SelectRobotType=1 if definitionData.get("Select Robot Type")=="yes" else 0
+_ReadCameraOTP=1 if definitionData.get("Read Camera OTP")=="yes" else 0
 _ReadTLVSN=1 if definitionData.get("Read TLV SN")=="yes" else 0
-
-
+_RetrieveHousingSN=1 if definitionData.get("Retrieve Housing SN")=="yes" else 0
+_ReadSOMSN=1 if definitionData.get("Read SOM SN")=="yes" else 0
+_Tests=definitionData.get("Tests")
 #endregion
 
 
