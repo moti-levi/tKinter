@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
-
+from PyClass import readTestSuiteDefinition as Rjdefinition
 #region global Var 
 _gcmbPaddy=10
 _BtnWidth=8
@@ -24,6 +24,8 @@ _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
 _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
+definitionData=Rjdefinition.JsonDefinitionReader.ReadJsonDefinition('DataFiles\Test_Suite_definition.json',_TestType)
+x=definitionData.get("Read TLV SN")
 #endregion
 
 
