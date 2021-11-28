@@ -12,6 +12,12 @@ master = Tk()
 master.geometry("200x200")
 
 
+def HideWindow():	
+    new_func()
+
+def new_func():
+    master.withdraw()
+	# mw.deiconify()
 # function to open a new window
 # on a button click
 def openNewWindow():

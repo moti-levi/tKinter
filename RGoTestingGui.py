@@ -43,12 +43,6 @@ def Button_Clicker(newnum):
 def fillCameraOPt():
     txtCameraOpt.insert(tk.END, 'camera opt')
 
-def HideWindow():	
-    new_func()
-
-def new_func():
-    mw.withdraw()
-	# mw.deiconify()
 
 
 
@@ -129,7 +123,7 @@ btnReadSomSn = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='
 
 btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: Button_Clicker(1),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = 9)
 
-btnTestStart = tk.Button(mw, text='Test', command=lambda: HideWindow(),bg='green', fg='white',width = 15).grid(row=9, column=1, columnspan=2)
+btnTestStart = tk.Button(mw, text='Test', command=lambda: Button_Clicker(1),bg='green', fg='white',width = 15).grid(row=9, column=1, columnspan=2)
 
 
 
