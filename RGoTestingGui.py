@@ -3,18 +3,27 @@ from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
 
-
+#region global Var 
 _gcmbPaddy=10
 _BtnWidth=8
-# Creating tkinter main window
+_row_num=0
+#endregion
+
+#region Creating tkinter main window
 mw = tk.Tk()
 mw.geometry('400x400')
 mw.title('R-Go Housing testing (v1.0)')
+
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
-   
+
 mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 
+#endregion
+   
+
+
+#region text box
 txtCameraOpt = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
 txtCameraOpt.grid(row=3, column=1,padx=10, pady=_gcmbPaddy)
@@ -31,6 +40,14 @@ txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove"
 		font = ("Times New Roman", 10))
 txtSomsn.grid(row=7, column=1,padx=10, pady=_gcmbPaddy)
 
+#endregion
+
+#reion Read Json
+data=Rj.ReadJson('DataFiles\data.json')
+TestData=data.get("Module Calibration")
+#endregion
+#region fuction
+
 def Button_Clicker1(newnum):
 	# new_number = e.get() + str(number)
 	txtCameraOpt.delete(0, tk.END)
@@ -43,12 +60,12 @@ def Button_Clicker(newnum):
 def fillCameraOPt():
     txtCameraOpt.insert(tk.END, 'camera opt')
 
+#endregion
 
 
 
 
-
-# Label's
+#region  Label's
 ttk.Label(mw, text = "Site:",anchor='w',justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = 0, padx = 10, pady = _gcmbPaddy)
@@ -86,6 +103,8 @@ ttk.Label(mw, text = "TLV S/N :",justify='left',
 ttk.Label(mw, text = "SOM S/N:",justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = 7, padx = 10, pady = _gcmbPaddy)
+
+#endregion
 
 SiteCmb = tk.StringVar()
 st = ttk.Combobox(mw, width = 27,textvariable = SiteCmb)
@@ -132,6 +151,6 @@ st.current(1)
 stn.current(1)
 module.current(1)
 
-data=Rj.ReadJson('DataFiles\data.json')
+
 
 mw.mainloop()
