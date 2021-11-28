@@ -1,3 +1,4 @@
+from os import truncate
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
@@ -16,13 +17,13 @@ _ShowRetryFailuresbtn:bool
 #endregion
 
 
-#reion Read Json
+#reion Read setting Json
 data=Rj.ReadJson('DataFiles\Setting.json')
 _generaldate=data.get("General")
 _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
-_showRDBtn=_generaldate.get("Show R&D button")
-_ShowRetryFailuresbtn=_generaldate.get("Show Retry Failures button")
+_showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
+_ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
 #endregion
 
 
