@@ -13,7 +13,13 @@ _Version=""
 _generaldate=any
 _showRDBtn:bool
 _ShowRetryFailuresbtn:bool
-
+_SelectModuleType:bool
+_SelectRobotType:bool
+_ReadCameraOTP:bool
+_ReadTLVSN:bool
+_ReadSOMSN:bool
+_RetrieveHousingSN:bool
+_Tests:any
 #endregion
 
 
@@ -24,8 +30,11 @@ _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
 _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
+#Read setting Json
 definitionData=Rjdefinition.JsonDefinitionReader.ReadJsonDefinition('DataFiles\Test_Suite_definition.json',_TestType)
-x=definitionData.get("Read TLV SN")
+_ReadTLVSN=1 if definitionData.get("Read TLV SN")=="yes" else 0
+
+
 #endregion
 
 
