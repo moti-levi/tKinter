@@ -185,31 +185,32 @@ def StartTesting():
 
 	top.title("Calibration in progress...")
 	
-	top.geometry('500x500')
+	top.geometry('320x300')
 	
 	Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
 		font = ("Times New Roman", 20)).grid(sticky = 'W',column = 0,
-		row = 0, padx = 10, pady = _gcmbPaddy)
-	# Headerlbl.pack()
+		row = 0, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	
 	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP,anchor='w',justify='left',
 		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
-		row = 1, padx = 10, pady = _gcmbPaddy)
-
-	# CameraOTPlbl.pack()
+		row = 1, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
 	progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
 			length = 300, mode = 'determinate')
 	progress.grid(column = 0,
-			row = 2, padx = 10, pady = 10)
-	btn = tk.Button(top,text='EXIT',command=exit_btn).grid(column = 0,
-			row = 3, padx = 10, pady = 10)
-	btn2 = tk.Button(top,text='bar',command=lambda:bar(top,progress)).grid(column = 0,
-			row = 4, padx = 10, pady = 10)
+			row = 2, padx = 10, pady = 10,columnspan=2)
+
+	ETAlbl=ttk.Label(top, text = "ETA",justify='center',
+		font = ("Times New Roman", 20))
+
+	ETAlbl.grid(sticky = 'W',column = 0,
+		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
+	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='green', fg='white',width = 8,anchor="c")
+	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
+	btn2 = tk.Button(top,text='Done',command=lambda:bar(top,progress),bg='green', fg='white',width = 8,anchor="c")
+	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
 	
-	# btn.pack()
-	# btn2.pack()
-	# progress.pack(pady = 10)
 	mw.withdraw()
 #region progress
 def bar(top,progress):
