@@ -1,0 +1,29 @@
+{
+"English": 
+{
+    "Test Suites":
+    {
+    "Module Calibration Title": "R-Go Module calibration",
+    "Housing Test Title": "R-Go Housing testing",
+    "Robot Test Title": "R-Go Final Assembly testing",    
+    "Site Label":"Site",
+    "Station Label": "Station",
+    "Module Type Label": "Module Type",
+    "Camera OTP Label": "Camera OTP"
+    }
+},
+"Hebrew": 
+{
+    "Test Suites":
+    {
+        "Module Calibration Title": "ארגו - קליברציית מודול",
+        "Housing Test Title": "ארגו - בדיקות מחשב ומודול",
+        "Robot Test Title": "ארגו - בדיקות סופיות",
+        "Site Label": "אתר",
+        "Station Label": "תחנה",
+        "Module Type Label": "סוג מודול",
+        "Camera OTP Label": "מזהה מצלמה"
+    }
+}
+}
+
