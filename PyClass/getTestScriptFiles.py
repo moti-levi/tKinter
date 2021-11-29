@@ -16,8 +16,9 @@ class JsonGetTestScriptFiles:
         data = json.load(f)
         #definitionData=data.get(definition)
         for scriptNum in scriptNumber:
-            x=data.get(scriptNumber)
-            retList.append(x)
+            scriptFiles=data.get(str(scriptNum)).get('PC scripts')
+            for scriptFile in scriptFiles:
+                retList.append(scriptFile)
         # Closing file
         f.close()
         return data

@@ -1,5 +1,7 @@
 #region Using
 from os import truncate
+import runpy
+import threading
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
@@ -29,6 +31,7 @@ _Tests:any
 _Eta:int=0
 # global _CamerOTP
 _lay=[]
+_scriptDataSrc=[]
 #endregion
 
 
@@ -59,7 +62,7 @@ _ReadSOMSN=1 if definitionData.get("Read SOM SN")=="yes" else 0
 _Tests=definitionData.get("Tests")
 #endregion
 #region get test python script from Test_definition.json
-scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
+_scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
 #endregion
 #region CalcTime
 for t in _Tests:
@@ -189,6 +192,7 @@ _row_num=_row_num+1
 
 def StartTesting():
 	top = tk.Toplevel()
+	mw.withdraw()
 	_lay.append(top)
 
 	top.title("Calibration in progress...")
@@ -199,39 +203,52 @@ def StartTesting():
 		font = ("Times New Roman", 20)).grid(sticky = 'W',column = 0,
 		row = 0, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
-	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP,anchor='w',justify='left',
+	
+	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP ,anchor='w',justify='left',
 		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
 		row = 1, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
+	
+	
+
 	progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
 			length = 300, mode = 'determinate')
 	progress.grid(column = 0,
 			row = 2, padx = 10, pady = 10,columnspan=2)
 
-	ETAlbl=ttk.Label(top, text = "ETA",justify='center',
+	ETAlbl=ttk.Label(top, text = "ETA :",justify='center',
 		font = ("Times New Roman", 20))
 
 	ETAlbl.grid(sticky = 'W',column = 0,
 		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
+	ElapsetTimelbl=ttk.Label(top, text = str(_Eta)  ,anchor='w',justify='left',
+		font = ("Times New Roman", 15))
+	ElapsetTimelbl.grid(sticky = 'W',column = 1,
+		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	# ElapsetTimelbl.after(100000,runScript(_scriptDataSrc,ElapsetTimelbl))
+
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
 	btn2 = tk.Button(top,text='Done',command=lambda:bar(top,progress),bg='green', fg='white',width = 8,anchor="c")
 	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
-	
-	mw.withdraw()
+	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl))
+	th.start()
+	#bar(top,progress)
+
 #region progress
-def bar(top,progress):
+def bar(top,progress,ElapsetTimelbl):
 		import time
-		exec(open('CallibrationFile\Acc_Calibration.py'))
+		# exec(open('CallibrationFile\Acc_Calibration.py'))		
 		progress['value'] = 20
 		top.update_idletasks()
-		time.sleep(1)
-
+		runpy.run_path(path_name='CallibrationTestScriptFile\Acc_Calibration.py')		
+		ElapsetTimelbl.config(text="5")
+		# time.sleep(1)
 		progress['value'] = 40
 		top.update_idletasks()
-		time.sleep(1)
-
+		runpy.run_path(path_name='CallibrationTestScriptFile\Test_CANbus_comm.py')
+		ElapsetTimelbl.config(text="10")
 		progress['value'] = 50
 		top.update_idletasks()
 		time.sleep(1)
