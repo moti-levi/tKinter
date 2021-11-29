@@ -6,6 +6,7 @@ from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
 from PyClass import readTestSuiteDefinition as Rjdefinition
 # from PyClass import raedLanguageDef as RjLanguageReader
+from PyClass import getTestScriptFiles as gTscr
 #endregion
 
 #region global Var
@@ -57,7 +58,9 @@ _RetrieveHousingSN=1 if definitionData.get("Retrieve Housing SN")=="yes" else 0
 _ReadSOMSN=1 if definitionData.get("Read SOM SN")=="yes" else 0
 _Tests=definitionData.get("Tests")
 #endregion
-
+#region get test python script from Test_definition.json
+scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
+#endregion
 #region CalcTime
 for t in _Tests:
   _Eta=_Eta+int(t)
