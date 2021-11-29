@@ -1,6 +1,7 @@
 {
 "10":
 {    
+    "Test Number": 10,
     "Enabled": "yes",
     "Test Name": "S3 Connectivity Test",
     "PC scripts": [ "S3_Connectivity_test.py" ],
@@ -10,8 +11,8 @@
 {
     "Test Number": 20,
     "Enabled": "yes",
-    "Test Name": "S3 Connectivity Test",
-    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Test Name": "DB Connectivity Test",
+    "PC scripts": [ "DB_Connectivity_Test.py" ],
     "Recommend on Fail": "Check camera module connectivity"
 
 },
@@ -19,28 +20,168 @@
 {
     "Test Number": 30,
     "Enabled": "yes",
-    "Test Name": "Basic CAM Sanity Test",
-    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Test Name": "TLV Connectivity Test",
+    "PC scripts": [ "TLV_Connectivity_Test.py" ],
     "Recommend on Fail": "Check camera module connectivity"
 
 },
 "40":
 {
-    "Test Number": 30,
+    "Test Number": 40,
     "Enabled": "yes",
-    "Test Name": "Basic Gyro Sanity Test",
-    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Test Name": "Basic CAM Sanity Test",
+    "PC scripts": [ "Basic_CAM_Sanity_Test.py" ],
     "Recommend on Fail": "Check camera module connectivity"
 
 },
 "50":
 {
-    "Test Number": 40,
+    "Test Number": 50,
     "Enabled": "yes",
-    "Test Name": "Basic Mag Sanity Test",
-    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Test Name": "Basic Gyro Sanity Test",
+    "PC scripts": ["Basic_Gyro_Sanity_Test.py"],
     "Recommend on Fail": "Check camera module connectivity"
 
-}
+},
+"60":
+{
+    "Test Number": 60,
+    "Enabled": "yes",
+    "Test Name": "Basic Mag Sanity Test",
+    "PC scripts": [ "Basic_Mag_Sanity_Test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
 
+},
+"70":
+{
+    "Test Number": 70,
+    "Enabled": "yes",
+    "Test Name": "Basic Mag Sanity Test",
+    "PC scripts": ["Basic_Mag_Sanity_Test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+},
+"80":
+{
+    "Test Number": 80,
+    "Enabled": "yes",
+    "Test Name": "Basic Acc Sanity Test",
+    "PC scripts": [ "Basic_Acc_Sanity_Test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+},
+"90":
+{
+    "Test Number": 90,
+    "Enabled": "yes",
+    "Test Name": "Basic EEPROM Sanity Test",
+    "PC scripts": [ "Basic_EEPROM_Sanity_Test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"100":
+{
+    "Test Number": 100,
+    "Enabled": "yes",
+    "Test Name": "Camera Calibration",
+    "PC scripts": [ "Camera_Calibration.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"110":
+{
+    "Test Number": 110,
+    "Enabled": "yes",
+    "Test Name": "Gyro Calibration",
+    "PC scripts": [ "Gyro_Calibration.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"120":
+{
+    "Test Number": 120,
+    "Enabled": "yes",
+    "Test Name": "Mag Calibration",
+    "PC scripts": [ "Mag_Calibration.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"130":
+{
+    "Test Number": 130,
+    "Enabled": "yes",
+    "Test Name": "Acc Calibration",
+    "PC scripts": [ "Acc_Calibration.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+}
+,
+"140":
+{
+    "Test Number": 140,
+    "Enabled": "yes",
+    "Test Name": "Verify Gyro Calibration in EEPROM",
+    "PC scripts": [ "Verify_Gyro_Calibration_in_EEPROM.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"150":
+{
+    "Test Number": 150,
+    "Enabled": "yes",
+    "Test Name": "Verify Mag Calibration in EEPROM",
+    "PC scripts": [ "Verify_Mag_Calibration_in_EEPROM.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"160":
+{
+    "Test Number": 160,
+    "Enabled": "yes",
+    "Test Name": "Verify Cam calibration in EEPROM",
+    "PC scripts": [ "Verify_Cam_calibration_in_EEPROM.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"170":
+{
+    "Test Number": 170,
+    "Enabled": "yes",
+    "Test Name": "Test Bad Pixels",
+    "PC scripts": [ "Test_Bad_Pixels.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"180":
+{
+    "Test Number": 180,
+    "Enabled": "yes",
+    "Test Name": "Test Occlusion",
+    "PC scripts": [ "Test_Occlusion.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"190":
+{
+    "Test Number": 190,
+    "Enabled": "yes",
+    "Test Name": "Test Acc",
+    "PC scripts": [ "Test_Acc.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"200":
+{
+    "Test Number": 200,
+    "Enabled": "yes",
+    "Test Name": "Test Gyro",
+    "PC scripts": [ "Test_Gyro.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+}
+,
+"210":
+{
+    "Test Number": 210,
+    "Enabled": "yes",
+    "Test Name": "Test Thermal",
+    "PC scripts": [ "Test_Thermal.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"220":
+{
+    "Test Number": 220,
+    "Enabled": "yes",
+    "Test Name": "Test Fan",
+    "PC scripts": [ "Test_Fan.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+}
 }
