@@ -96,9 +96,7 @@ def fillCameraOPt():
 
 
 #region  Label's
-ttk.Label(mw, text = "Site:",anchor='w',justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = 0, padx = 10, pady = _gcmbPaddy)
+
 
 
 ttk.Label(mw, text = "station :",justify='left',
@@ -136,10 +134,15 @@ ttk.Label(mw, text = "SOM S/N:",justify='left',
 
 #endregion
 
+#region Site
+ttk.Label(mw, text = "Site:",anchor='w',justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
 SiteCmb = tk.StringVar()
 st = ttk.Combobox(mw, width = 27,textvariable = SiteCmb)
 st['values'] = ('Hausvarna','Haifa','Holon')
-st.grid(column = 1, row = 0)
+st.grid(column = 1, row = _row_num)
+#endregion Site
 
 StationCmb = tk.StringVar()
 stn = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
