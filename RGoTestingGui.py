@@ -1,9 +1,12 @@
+#region Using
 from os import truncate
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
 from PyClass import readTestSuiteDefinition as Rjdefinition
+#endregion
+
 #region global Var 
 _gcmbPaddy=10
 _BtnWidth=8
@@ -23,15 +26,18 @@ _Tests:any
 #endregion
 
 
-#reion Read setting Json
+#region Read setting Json
 data=Rj.ReadJson('DataFiles\Setting.json')
 _generaldate=data.get("General")
 _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
 _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
+#endregion
 
-#Read SuiteDefinition Json
+#region Read SuiteDefinition Json
+
+
 definitionData=Rjdefinition.JsonDefinitionReader.ReadJsonDefinition('DataFiles\Test_Suite_definition.json',_TestType)
 _SelectModuleType=1 if definitionData.get("Select Module Type")=="yes" else 0
 _SelectRobotType=1 if definitionData.get("Select Robot Type")=="yes" else 0
@@ -58,9 +64,19 @@ mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 
 
 #region text box
+
+#reion CameraOTP
+ttk.Label(mw, text = "Camera Opt :",justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+btnReadCamOtp = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = 3)
+_row_num=_row_num+1
+
+
 txtCameraOpt = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
 txtCameraOpt.grid(row=3, column=1,padx=10, pady=_gcmbPaddy)
+#endregion
 
 txtHousting = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
@@ -97,21 +113,6 @@ def fillCameraOPt():
 
 #region  Label's
 
-
-
-ttk.Label(mw, text = "station :",justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = 1, padx = 10, pady = _gcmbPaddy)
-
-ttk.Label(mw, text = "Module Type :",
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = 2, padx = 10, pady = _gcmbPaddy)
-
-
-ttk.Label(mw, text = "Camera Opt :",justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = 3, padx = 10, pady = _gcmbPaddy)
-
 ttk.Label(mw, text = "Compute Type :",justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = 4, padx = 10, pady = _gcmbPaddy)
@@ -142,17 +143,33 @@ SiteCmb = tk.StringVar()
 st = ttk.Combobox(mw, width = 27,textvariable = SiteCmb)
 st['values'] = ('Hausvarna','Haifa','Holon')
 st.grid(column = 1, row = _row_num)
+_row_num=_row_num+1
 #endregion Site
-
+#region Station
 StationCmb = tk.StringVar()
 stn = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
 stn['values'] = ('1','2','3')
-stn.grid(column = 1, row = 1)
+stn.grid(column = 1, row = _row_num)
 
-ModuleTypeCmb = tk.StringVar()
-module = ttk.Combobox(mw, width = 27,textvariable = ModuleTypeCmb)
-module['values'] = ('1','2','3')
-module.grid(column = 1, row = 2)
+ttk.Label(mw, text = "station :",justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+
+_row_num=_row_num+1
+#endregion
+#region ModuleType
+if(_SelectModuleType):
+	ttk.Label(mw, text = "Module Type :",
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+
+	ModuleTypeCmb = tk.StringVar()
+	module = ttk.Combobox(mw, width = 27,textvariable = ModuleTypeCmb)
+	module['values'] = ('1','2','3')
+	module.grid(column = 1, row = 2)
+	_row_num=_row_num+1
+#endregion
+
 
 ComputeTypeCmb = tk.StringVar()
 ComputeType = ttk.Combobox(mw, width = 27,textvariable = ModuleTypeCmb)
@@ -165,7 +182,7 @@ ComputeType.grid(column = 1, row = 4)
 
 #button opperation
 
-btnRead = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = 3)
+
 
 btnBarcode = tk.Button(mw, text='Barcode', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row =5)
 
