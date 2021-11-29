@@ -183,5 +183,53 @@
     "Test Name": "Test Fan",
     "PC scripts": [ "Test_Fan.py"],
     "Recommend on Fail": "Check camera module connectivity"
+},
+"230":
+{
+    "Test Number": 230,
+    "Enabled": "yes",
+    "Test Name": "Test Focus",
+    "PC scripts": [ "Test_Focus.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"240":
+{
+    "Test Number": 240,
+    "Enabled": "yes",
+    "Test Name": "Test Lens issues",
+    "PC scripts": [ "Test_Lens_issues.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"250":
+{
+    "Test Number": 250,
+    "Enabled": "yes",
+    "Test Name": "Test CANbus comm",
+    "PC scripts": [ "Test_CANbus_comm.py"],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"260":
+{
+    "Test Number": 260,
+    "Enabled": "yes",
+    "Test Name": "Test CANbus comm",
+    "PC scripts": [ "Test_CANbus_comm.py"],
+    "Yaw Calibration": "Check camera module connectivity"
+},
+"270":
+{
+    "Test Number": 270,
+    "Enabled": "yes",
+    "Test Name": "Install TLV Script",
+    "PC scripts": [ "Install_TLV_Script.py"],
+    "Yaw Calibration": "Check camera module connectivity"
+},
+"280":
+{
+    "Test Number": 280,
+    "Enabled": "yes",
+    "Test Name": "Uninstall  TLV Script",
+    "PC scripts": ["Uninstall_TLV_Script.py"],
+    "Yaw Calibration": "Check camera module connectivity"
 }
 }
