@@ -8,7 +8,7 @@ from PyClass import readTestSuiteDefinition as Rjdefinition
 # from PyClass import raedLanguageDef as RjLanguageReader
 #endregion
 
-#region global Var 
+#region global Var
 _gcmbPaddy=10
 _BtnWidth=8
 _row_num=0
@@ -25,6 +25,8 @@ _ReadSOMSN:bool
 _RetrieveHousingSN:bool
 _Language:str
 _Tests:any
+# global _CamerOTP
+_lay=[]
 #endregion
 
 
@@ -69,8 +71,10 @@ mw.title('R-Go Housing testing ' + _Version)
 
 mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 
+
+
 #endregion
-   
+
 #region Site
 ttk.Label(mw, text = "Site:",anchor='w',justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
@@ -114,7 +118,7 @@ if(_TestType=="Housing Tests"):
 	ttk.Label(mw, text = "Compute Type :",justify='left',
 			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 			row = _row_num, padx = 10, pady = _gcmbPaddy)
-	
+
 	ComputeTypeCmb = tk.StringVar()
 	ComputeType = ttk.Combobox(mw, width = 27,textvariable = ComputeTypeCmb)
 	ComputeType['values'] = ('1','2','3')
@@ -122,9 +126,9 @@ if(_TestType=="Housing Tests"):
 	_row_num=_row_num+1
 #endregion
 
-#region Housing 
+#region Housing
 if(_RetrieveHousingSN):
-	
+
 	ttk.Label(mw, text = "Housing S/N :",justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
@@ -175,17 +179,80 @@ _row_num=_row_num+1
 
 #region fuction
 
-def Button_Clicker1(newnum):
-	# new_number = e.get() + str(number)
-	txtCameraOpt.delete(0, tk.END)
-	txtCameraOpt.insert(0, str(newnum))
+def StartTesting():
+	top = tk.Toplevel()
+	_lay.append(top)
+
+	top.title("Calibration in progress...")
+	
+	top.geometry('500x500')
+	
+	Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
+		font = ("Times New Roman", 20)).grid(sticky = 'W',column = 0,
+		row = 0, padx = 10, pady = _gcmbPaddy)
+	# Headerlbl.pack()
+	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP,anchor='w',justify='left',
+		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
+		row = 1, padx = 10, pady = _gcmbPaddy)
+
+	# CameraOTPlbl.pack()
+	
+	progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
+			length = 300, mode = 'determinate')
+	progress.grid(column = 0,
+			row = 2, padx = 10, pady = 10)
+	btn = tk.Button(top,text='EXIT',command=exit_btn).grid(column = 0,
+			row = 3, padx = 10, pady = 10)
+	btn2 = tk.Button(top,text='bar',command=lambda:bar(top,progress)).grid(column = 0,
+			row = 4, padx = 10, pady = 10)
+	
+	
+	# btn.pack()
+	# btn2.pack()
+	# progress.pack(pady = 10)
+	mw.withdraw()
+#region progress
+def bar(top,progress):
+		import time
+		progress['value'] = 20
+		top.update_idletasks()
+		time.sleep(1)
+
+		progress['value'] = 40
+		top.update_idletasks()
+		time.sleep(1)
+
+		progress['value'] = 50
+		top.update_idletasks()
+		time.sleep(1)
+
+		progress['value'] = 60
+		top.update_idletasks()
+		time.sleep(1)
+
+		progress['value'] = 80
+		top.update_idletasks()
+		time.sleep(1)
+		progress['value'] = 100
+		# progress.pack()
+#endregion
+
+#region close calibration progress
+def exit_btn():
+    top = _lay[0]
+    top.destroy()
+    _lay.pop(0)
+    #remove the other window entirely
+    #make root visible again
+    mw.iconify()
+    mw.deiconify()
+#endregion
 
 def Button_Clicker(newnum):
-	txtCameraOpt.config(text="changed text!")
+	global _CameraOTP	
+	txtCameraOpt.config(text="changed text!")	
+	_CameraOTP='1234'
 
-
-def fillCameraOPt():
-    txtCameraOpt.insert(tk.END, 'camera opt')
 
 #endregion
 
@@ -193,7 +260,7 @@ def fillCameraOPt():
 if(_showRDBtn):
 	btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: Button_Clicker(1),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = _row_num)
 
-btnTestStart = tk.Button(mw, text='Test', command=lambda: Button_Clicker(1),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
+btnTestStart = tk.Button(mw, text='Test', command=lambda: StartTesting(),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
 
 _row_num=_row_num+1
 #endregion
