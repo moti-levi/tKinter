@@ -25,6 +25,7 @@ _ReadSOMSN:bool
 _RetrieveHousingSN:bool
 _Language:str
 _Tests:any
+_Eta:int=0
 # global _CamerOTP
 _lay=[]
 #endregion
@@ -57,6 +58,10 @@ _ReadSOMSN=1 if definitionData.get("Read SOM SN")=="yes" else 0
 _Tests=definitionData.get("Tests")
 #endregion
 
+#region CalcTime
+for t in _Tests:
+  _Eta=_Eta+int(t)
+#endregion
 
 #region Creating tkinter main window
 mw = tk.Tk()
@@ -64,7 +69,7 @@ if(_TestType=="Housing Tests"):
 	mw.geometry('400x400')
 else:
 	mw.geometry('400x260')
-mw.title('R-Go Housing testing ' + _Version)
+mw.title('R-Go ' + _TestType+ ' ' + _Version)
 
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
@@ -206,7 +211,7 @@ def StartTesting():
 	ETAlbl.grid(sticky = 'W',column = 0,
 		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
-	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='green', fg='white',width = 8,anchor="c")
+	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
 	btn2 = tk.Button(top,text='Done',command=lambda:bar(top,progress),bg='green', fg='white',width = 8,anchor="c")
 	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
@@ -261,7 +266,7 @@ def Button_Clicker(newnum):
 if(_showRDBtn):
 	btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: Button_Clicker(1),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = _row_num)
 
-btnTestStart = tk.Button(mw, text='Test', command=lambda: StartTesting(),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
+btnTestStart = tk.Button(mw, text='Calibrate', command=lambda: StartTesting(),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
 
 _row_num=_row_num+1
 #endregion
