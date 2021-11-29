@@ -220,6 +220,7 @@ def StartTesting():
 #region progress
 def bar(top,progress):
 		import time
+		exec(open('CallibrationFile\Acc_Calibration.py'))
 		progress['value'] = 20
 		top.update_idletasks()
 		time.sleep(1)
