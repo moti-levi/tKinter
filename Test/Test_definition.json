@@ -1,0 +1,46 @@
+{
+"10":
+{    
+    "Enabled": "yes",
+    "Test Name": "S3 Connectivity Test",
+    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+},
+"20":
+{
+    "Test Number": 20,
+    "Enabled": "yes",
+    "Test Name": "S3 Connectivity Test",
+    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+},
+"30":
+{
+    "Test Number": 30,
+    "Enabled": "yes",
+    "Test Name": "Basic CAM Sanity Test",
+    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+},
+"40":
+{
+    "Test Number": 30,
+    "Enabled": "yes",
+    "Test Name": "Basic Gyro Sanity Test",
+    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+},
+"50":
+{
+    "Test Number": 40,
+    "Enabled": "yes",
+    "Test Name": "Basic Mag Sanity Test",
+    "PC scripts": [ "S3_Connectivity_test.py" ],
+    "Recommend on Fail": "Check camera module connectivity"
+
+}
+
+}
