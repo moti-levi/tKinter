@@ -1,3 +1,3 @@
 import time
 		
-time.sleep(13)	
+time.sleep(6)	

@@ -21,7 +21,7 @@ class JsonGetTestScriptFiles:
                 retList.append(scriptFile)
         # Closing file
         f.close()
-        return data
+        return retList
 
     def __del__(self):
       class_name = self.__class__.__name__

@@ -1,5 +1,6 @@
 #region Using
 from os import truncate
+import time
 import runpy
 import threading
 import tkinter as tk
@@ -208,9 +209,6 @@ def StartTesting():
 		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
 		row = 1, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
-	
-	
-
 	progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
 			length = 300, mode = 'determinate')
 	progress.grid(column = 0,
@@ -226,11 +224,10 @@ def StartTesting():
 		font = ("Times New Roman", 15))
 	ElapsetTimelbl.grid(sticky = 'W',column = 1,
 		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
-	# ElapsetTimelbl.after(100000,runScript(_scriptDataSrc,ElapsetTimelbl))
-
+	
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
-	btn2 = tk.Button(top,text='Done',command=lambda:bar(top,progress),bg='green', fg='white',width = 8,anchor="c")
+	btn2 = tk.Button(top,text='Done',bg='green', fg='white',width = 8,anchor="c",command=exit_btn)
 	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
 	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl))
 	th.start()
@@ -238,32 +235,30 @@ def StartTesting():
 
 #region progress
 def bar(top,progress,ElapsetTimelbl):
-		import time
-		# exec(open('CallibrationFile\Acc_Calibration.py'))		
-		progress['value'] = 20
-		top.update_idletasks()
-		runpy.run_path(path_name='CallibrationTestScriptFile\Acc_Calibration.py')		
-		ElapsetTimelbl.config(text="5")
-		# time.sleep(1)
-		progress['value'] = 40
-		top.update_idletasks()
-		runpy.run_path(path_name='CallibrationTestScriptFile\Test_CANbus_comm.py')
-		ElapsetTimelbl.config(text="10")
-		progress['value'] = 50
-		top.update_idletasks()
-		time.sleep(1)
-
-		progress['value'] = 60
-		top.update_idletasks()
-		time.sleep(1)
-
-		progress['value'] = 80
-		top.update_idletasks()
-		time.sleep(1)
-		progress['value'] = 100
-		# progress.pack()
+	global _Eta
+	runthreads = []
+	# exec(open('CallibrationFile\Acc_Calibration.py'))		
+	for script in _scriptDataSrc:
+		# top.update_idletasks()
+		print('CallibrationTestScriptFile\\' + script)
+		sThrd = threading.Thread(target=RunTestScript,args=('CallibrationTestScriptFile\\' + script,))	
+		sThrd.start()		
+		runthreads.append(sThrd)
+		while len(runthreads) > 0:
+			# ElapsetTimelbl.config(text=str(int(_Eta)-1))
+			_Eta=_Eta-1
+			ElapsetTimelbl['text'] = str(_Eta)
+			progress['value'] = int(progress['value'])+3
+			time.sleep(0.5)
+			for thread in runthreads:
+				if not thread.is_alive():				
+					runthreads.pop(0)	
+		ElapsetTimelbl.config(text='Done')	
 #endregion
-
+#region run Py test Script
+def RunTestScript(path_name:str):
+	runpy.run_path(path_name=path_name)#'CallibrationTestScriptFile\Acc_Calibration.py'
+#endregion
 #region close calibration progress
 def exit_btn():
     top = _lay[0]
