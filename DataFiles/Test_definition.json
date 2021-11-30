@@ -2,7 +2,7 @@
 "10":
 {    
     "Test Number": 10,
-    "Time":3,
+    "Time":13,
     "Enabled": "yes",
     "Test Name": "S3 Connectivity Test",
     "PC scripts": [ "S3_Connectivity_test.py" ],

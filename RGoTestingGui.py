@@ -6,6 +6,7 @@ import threading
 import tkinter as tk
 import importlib
 import importlib.util
+import queue
 from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
@@ -237,6 +238,7 @@ def StartTesting():
 
 #region progress
 def bar(top,progress,ElapsetTimelbl):
+	import queue
 	global _Eta
 	runthreads = []
 	# exec(open('CallibrationFile\Acc_Calibration.py'))		
@@ -248,24 +250,26 @@ def bar(top,progress,ElapsetTimelbl):
 		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
 		test_module = importlib.util.module_from_spec(test_spec)		
 		test_spec.loader.exec_module(test_module)
+		print(test_module.RetVal)
 		#create instance of the class
-		ScriptClass = test_module.Test()
-		
-		#endregion
-
+		ScriptClass = test_module.Test()		
+		#endregion		
 		sThrd = threading.Thread(target=ScriptClass.RunTest)	
 		sThrd.start()		
 		runthreads.append(sThrd)
-		while len(runthreads) > 0:
-			# ElapsetTimelbl.config(text=str(int(_Eta)-1))
+		print(test_module.RetVal)		
+		while len(runthreads) > 0:			
 			_Eta=_Eta-1
 			ElapsetTimelbl['text'] = str(_Eta)
-			progress['value'] = int(progress['value'])+3
+			progress['value'] = int(progress['value'])+1
 			time.sleep(1)
 			for thread in runthreads:
 				if not thread.is_alive():				
-					runthreads.pop(0)	
-		ElapsetTimelbl.config(text='Done')	
+					runthreads.pop(0)
+		print(test_module.RetVal)
+	ElapsetTimelbl.config(text='Done')
+
+	
 #endregion
 #region run Py test Script
 def RunTestScript(path_name:str):

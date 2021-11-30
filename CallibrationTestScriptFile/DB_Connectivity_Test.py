@@ -1,6 +1,11 @@
 import time
-		
+
+
+RetVal=''
+
 class Test:
-    def RunTest():		
-        time.sleep(3)	
-        return True		
+    
+    def RunTest(self):		
+        time.sleep(3)
+        global RetVal
+        RetVal='Pass'		
