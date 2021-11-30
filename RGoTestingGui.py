@@ -267,6 +267,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 	elapsedTime=0
 	inetvalPB=_Eta		
 	TestIndex=0	
+	#region Run all Test Scripts
 	for script in _scriptDataSrc:				
 		specName =script.split('.')		
 		#region load class Dynamic by Reflection
@@ -277,12 +278,15 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		#create instance of the class
 		ScriptClass = test_module.Test()		
 		#endregion		
+		#region Thread run
 		sThrd = threading.Thread(target=ScriptClass.RunTest)	
 		sThrd.start()		
 		runthreads.append(sThrd)
+		#endregion
 		CurrentTestTime=0
 		StartEtaTime=elapsedTime
 		StartinetvalPB=inetvalPB
+		#region Thread Loop 
 		while len(runthreads) > 0:	
 			CurrentTestTime+=1		
 			elapsedTime=elapsedTime+1
@@ -302,7 +306,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 			for thread in runthreads:
 				if not thread.is_alive():				
 					runthreads.pop(0)
-
+		#endregion
 		print(test_module.RetVal)	
 		TestPass=True	
 		#in case that the test take longer from that expected
@@ -310,6 +314,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 			elapsedTime=StartEtaTime+int(_scriptRunTime[TestIndex])
 			inetvalPB=StartinetvalPB-int(_scriptRunTime[TestIndex])
 		TestIndex=TestIndex+1
+	#endregion
 	if(TestPass):
 		ElapsetTimelbl.config(text='Pass',foreground='green')
 	else:
