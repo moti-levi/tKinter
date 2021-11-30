@@ -4,6 +4,8 @@ import time
 import runpy
 import threading
 import tkinter as tk
+import importlib
+import importlib.util
 from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
@@ -241,7 +243,17 @@ def bar(top,progress,ElapsetTimelbl):
 	for script in _scriptDataSrc:
 		# top.update_idletasks()
 		print('CallibrationTestScriptFile\\' + script)
-		sThrd = threading.Thread(target=RunTestScript,args=('CallibrationTestScriptFile\\' + script,))	
+		specName =script.split('.')
+		#region load class Dynamic by reflaction
+		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
+		test_module = importlib.util.module_from_spec(test_spec)		
+		test_spec.loader.exec_module(test_module)
+		#create instance of the class
+		ScriptClass = test_module.Test()
+		
+		#endregion
+
+		sThrd = threading.Thread(target=ScriptClass.RunTest)	
 		sThrd.start()		
 		runthreads.append(sThrd)
 		while len(runthreads) > 0:

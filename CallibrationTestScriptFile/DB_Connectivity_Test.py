@@ -1,3 +1,6 @@
 import time
 		
-time.sleep(5)		
+class Test:
+    def RunTest():		
+        time.sleep(3)	
+        return True		
