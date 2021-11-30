@@ -10,7 +10,7 @@ class JsonGetTestScriptFiles:
     def ReadTestScriptFiles(_jsonFileName,scriptNumber:any):
         # Opening JSON file
         f = open(str(_jsonFileName))
-        retList=[]
+        retList=[]        
         # returns JSON object as
         # a dictionary
         data = json.load(f)
@@ -25,18 +25,18 @@ class JsonGetTestScriptFiles:
 
     def ReadTestScriptFilesRunTime(_jsonFileName,scriptNumber:any):
         # Opening JSON file
-        f = open(str(_jsonFileName))
-        retTime:int=0
+        retList=[] 
+        f = open(str(_jsonFileName))        
         # returns JSON object as
         # a dictionary
         data = json.load(f)
         #definitionData=data.get(definition)
         for scriptNum in scriptNumber:
             scriptFilesTime=data.get(str(scriptNum)).get('Time')            
-            retTime+=int(scriptFilesTime)
+            retList.append(int(scriptFilesTime))
         # Closing file
         f.close()
-        return retTime
+        return retList
 
     def __del__(self):
       class_name = self.__class__.__name__

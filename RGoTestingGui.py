@@ -70,7 +70,9 @@ _Tests=definitionData.get("Tests")
 _scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
 #endregion
 #region Calc all script Time
-_Eta=gTscr.JsonGetTestScriptFiles.ReadTestScriptFilesRunTime('DataFiles\Test_definition.json',_Tests)
+_scriptRunTime=gTscr.JsonGetTestScriptFiles.ReadTestScriptFilesRunTime('DataFiles\Test_definition.json',_Tests)
+for t in _scriptRunTime:
+	_Eta+=int(t)
 #endregion
 
 #region Creating tkinter main window
@@ -204,18 +206,34 @@ def StartTesting():
 	top.geometry('320x300')
 	
 	Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
-		font = ("Times New Roman", 20)).grid(sticky = 'W',column = 0,
-		row = 0, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		font = ("Times New Roman", 20))
 	
-	
+	Headerlbl.grid(sticky = 'W',column = 0,row = 0, padx = 10, pady = _gcmbPaddy,columnspan=2)
+
 	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP ,anchor='w',justify='left',
 		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
 		row = 1, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
-	progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
-			length = 300, mode = 'determinate')
-	progress.grid(column = 0,
-			row = 2, padx = 10, pady = 10,columnspan=2)
+	# progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
+	# 		length = 300, mode = 'determinate')
+	# progress.grid(column = 0,
+	# 		row = 2, padx = 10, pady = 10,columnspan=2)
+
+	#region progress bar Style
+	style = ttk.Style(top)
+	style.layout('text.Horizontal.TProgressbar',
+             [('Horizontal.Progressbar.trough',
+               {'children': [('Horizontal.Progressbar.pbar',
+                              {'side': 'left', 'sticky': 'ns'})],
+                'sticky': 'nswe'}),
+              ('Horizontal.Progressbar.label', {'sticky': ''})])
+	style.configure('text.Horizontal.TProgressbar', text='0 %')
+	#endregion progress bar Style
+	
+	progress = ttk.Progressbar(top, style='text.Horizontal.TProgressbar', length=200,
+                               maximum=_Eta, value=0)
+
+	progress.grid(column = 0,row = 2, padx = 10, pady = 10,columnspan=2)						   
 
 	ETAlbl=ttk.Label(top, text = "ETA :",justify='center',
 		font = ("Times New Roman", 20))
@@ -230,23 +248,28 @@ def StartTesting():
 	
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
-	btn2 = tk.Button(top,text='Done',bg='green', fg='white',width = 8,anchor="c",command=exit_btn)
+
+	btn2 = tk.Button(top,text='Done',bg='green', fg='white',width = 8,anchor="c",command=exit_btn,state='disabled')
 	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
-	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl))
+
+	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btn2))
 	th.start()
 	#bar(top,progress)
 
 #region progress
-def bar(top,progress,ElapsetTimelbl):
+def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
+		btn2):
 	import queue
 	global _Eta
+	TestPass:bool
 	runthreads = []
-	# exec(open('CallibrationFile\Acc_Calibration.py'))		
-	for script in _scriptDataSrc:
-		# top.update_idletasks()
-		print('CallibrationTestScriptFile\\' + script)
-		specName =script.split('.')
-		#region load class Dynamic by reflaction
+	# exec(open('CallibrationFile\Acc_Calibration.py'))	
+	elapsedTime=0
+	inetvalPB=_Eta		
+	TestIndex=0	
+	for script in _scriptDataSrc:				
+		specName =script.split('.')		
+		#region load class Dynamic by Reflection
 		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
 		test_module = importlib.util.module_from_spec(test_spec)		
 		test_spec.loader.exec_module(test_module)
@@ -257,18 +280,43 @@ def bar(top,progress,ElapsetTimelbl):
 		sThrd = threading.Thread(target=ScriptClass.RunTest)	
 		sThrd.start()		
 		runthreads.append(sThrd)
-		print(test_module.RetVal)		
-		while len(runthreads) > 0:			
-			_Eta=_Eta-1
-			ElapsetTimelbl['text'] = str(_Eta)
-			progress['value'] = int(progress['value'])+1
+		CurrentTestTime=0
+		StartEtaTime=elapsedTime
+		StartinetvalPB=inetvalPB
+		while len(runthreads) > 0:	
+			CurrentTestTime+=1		
+			elapsedTime=elapsedTime+1
+			inetvalPB=inetvalPB-1
+			ElapsetTimelbl['text'] = str(inetvalPB)
+
+			if(elapsedTime<_Eta-2):
+				percentage = round(elapsedTime/_Eta * 100)  # Calculate percentage.
+				progress.config(value=elapsedTime)
+				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(percentage))
+			else:
+				progress.config(value=100)
+				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))
+
+			# progress['value'] = int(progress['value'])+inetvalPB
 			time.sleep(1)
 			for thread in runthreads:
 				if not thread.is_alive():				
 					runthreads.pop(0)
-		print(test_module.RetVal)
-	ElapsetTimelbl.config(text='Done')
 
+		print(test_module.RetVal)	
+		TestPass=True	
+		#in case that the test take longer from that expected
+		if(CurrentTestTime>_scriptRunTime[TestIndex]):
+			elapsedTime=StartEtaTime+int(_scriptRunTime[TestIndex])
+			inetvalPB=StartinetvalPB-int(_scriptRunTime[TestIndex])
+		TestIndex=TestIndex+1
+	if(TestPass):
+		ElapsetTimelbl.config(text='Pass',foreground='green')
+	else:
+		ElapsetTimelbl.config(text='Pass',foreground='red')
+	ETAlbl.config(text="Result")
+	Headerlbl.config(text='Calibration completed')
+	btn2.config(state='normal')
 	
 #endregion
 #region run Py test Script
