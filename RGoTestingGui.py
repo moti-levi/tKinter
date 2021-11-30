@@ -33,6 +33,7 @@ _Eta:int=0
 # global _CamerOTP
 _lay=[]
 _scriptDataSrc=[]
+_scriptRunTime=[]
 #endregion
 
 
@@ -65,9 +66,8 @@ _Tests=definitionData.get("Tests")
 #region get test python script from Test_definition.json
 _scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
 #endregion
-#region CalcTime
-for t in _Tests:
-  _Eta=_Eta+int(t)
+#region Calc all script Time
+_Eta=gTscr.JsonGetTestScriptFiles.ReadTestScriptFilesRunTime('DataFiles\Test_definition.json',_Tests)
 #endregion
 
 #region Creating tkinter main window
@@ -249,7 +249,7 @@ def bar(top,progress,ElapsetTimelbl):
 			_Eta=_Eta-1
 			ElapsetTimelbl['text'] = str(_Eta)
 			progress['value'] = int(progress['value'])+3
-			time.sleep(0.5)
+			time.sleep(1)
 			for thread in runthreads:
 				if not thread.is_alive():				
 					runthreads.pop(0)	
