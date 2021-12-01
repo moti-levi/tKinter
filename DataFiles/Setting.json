@@ -5,6 +5,7 @@
    "Version": "1.0",
    "Language": "English",
    "Show R&D button": "yes",
-   "Show Retry Failures button": "yes"
+   "Show Retry Failures button": "yes",
+   "Retry On Failure": "No"
 }
 }

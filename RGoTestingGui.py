@@ -11,7 +11,7 @@ from tkinter import ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
 from PyClass import readTestSuiteDefinition as Rjdefinition
-# from PyClass import raedLanguageDef as RjLanguageReader
+from PyClass import raedLanguageDef as RjLanguageReader
 from PyClass import getTestScriptFiles as gTscr
 #endregion
 
@@ -37,6 +37,8 @@ _Eta:int=0
 _lay=[]
 _scriptDataSrc=[]
 _scriptRunTime=[]
+__RetryOnFailyre:bool
+_LangdefinitionDataDic:any
 #endregion
 
 
@@ -48,10 +50,11 @@ _Version=_generaldate.get("Version")
 _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
 _Language=_generaldate.get("Language")
+_RetryOnFailyre=1 if(_generaldate.get("Retry On Failure"))=="Yes" else 0
 #endregion
 
 #region Languege Json
-# definitionData=RjLanguageReader.JsonDefinitionLanguage.ReadJsonLanguage('Lang\Language_definitions.json',_Language)
+_LangdefinitionDataDic=RjLanguageReader.JsonDefinitionLanguage.ReadJsonLanguage('Lang\Language_definitions.json',_Language)
 #endregion
 
 #region Read SuiteDefinition Json
@@ -261,7 +264,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		btn2):
 	import queue
 	global _Eta
-	TestPass:bool
+	TestPass:bool=True
 	runthreads = []
 	# exec(open('CallibrationFile\Acc_Calibration.py'))	
 	elapsedTime=0
@@ -307,8 +310,11 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 				if not thread.is_alive():				
 					runthreads.pop(0)
 		#endregion
-		print(test_module.RetVal)	
-		TestPass=True	
+		if(test_module.RetVal!='Pass'):
+			TestPass=False
+			if(_RetryOnFailyre==False):
+				break
+		print(test_module.RetVal)				
 		#in case that the test take longer from that expected
 		if(CurrentTestTime>_scriptRunTime[TestIndex]):
 			elapsedTime=StartEtaTime+int(_scriptRunTime[TestIndex])
@@ -318,7 +324,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 	if(TestPass):
 		ElapsetTimelbl.config(text='Pass',foreground='green')
 	else:
-		ElapsetTimelbl.config(text='Pass',foreground='red')
+		ElapsetTimelbl.config(text='Fail',foreground='red')
 	ETAlbl.config(text="Result")
 	Headerlbl.config(text='Calibration completed')
 	btn2.config(state='normal')

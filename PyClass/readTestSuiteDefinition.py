@@ -10,11 +10,12 @@ class JsonDefinitionReader:
     def ReadJsonDefinition(_jsonFileName,definition:str):
         # Opening JSON file
         f = open(str(_jsonFileName))
-
+        retdict={}        
         # returns JSON object as
         # a dictionary
         data = json.load(f)
         definitionData=data.get(definition)
+        
         # Closing file
         f.close()
         return data[definition]
