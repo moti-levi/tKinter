@@ -2,7 +2,7 @@
 "10":
 {    
     "Test Number": 10,
-    "Time":13,
+    "Duration":13,
     "Enabled": "yes",
     "Test Name": "S3 Connectivity Test",
     "PC scripts": [ "S3_Connectivity_test.py" ],
@@ -11,7 +11,7 @@
 "20":
 {
     "Test Number": 20,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "DB Connectivity Test",
     "PC scripts": [ "DB_Connectivity_Test.py" ],
@@ -20,7 +20,7 @@
 "30":
 {
     "Test Number": 30,
-    "Time":7,
+    "Duration":7,
     "Enabled": "yes",
     "Test Name": "TLV Connectivity Test",
     "PC scripts": [ "TLV_Connectivity_Test.py" ],
@@ -30,7 +30,7 @@
 "40":
 {
     "Test Number": 40,
-    "Time":3,
+    "Duration":3,
     "Enabled": "yes",
     "Test Name": "Basic CAM Sanity Test",
     "PC scripts": [ "Basic_CAM_Sanity_Test.py" ],
@@ -40,7 +40,7 @@
 "50":
 {
     "Test Number": 50,
-    "Time":6,
+    "Duration":6,
     "Enabled": "yes",
     "Test Name": "Basic Gyro Sanity Test",
     "PC scripts": ["Basic_Gyro_Sanity_Test.py"],
@@ -50,7 +50,7 @@
 "60":
 {
     "Test Number": 60,
-    "Time":15,
+    "Duration":15,
     "Enabled": "yes",
     "Test Name": "Basic Mag Sanity Test",
     "PC scripts": [ "Basic_Mag_Sanity_Test.py" ],
@@ -60,7 +60,7 @@
 "70":
 {
     "Test Number": 70,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "Basic Acc Sanity Test",
     "PC scripts": [ "Basic_Acc_Sanity_Test.py" ],
@@ -70,7 +70,7 @@
 "80":
 {
     "Test Number": 80,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "Basic EEPROM Sanity Test",
     "PC scripts": [ "Basic_EEPROM_Sanity_Test.py" ],
@@ -79,7 +79,7 @@
 "90":
 {
     "Test Number": 90,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Camera Calibration",
     "PC scripts": [ "Camera_Calibration.py" ],
@@ -88,7 +88,7 @@
 "100":
 {
     "Test Number": 100,
-    "Time":13,
+    "Duration":13,
     "Enabled": "yes",
     "Test Name": "Gyro Calibration",
     "PC scripts": [ "Gyro_Calibration.py" ],
@@ -97,7 +97,7 @@
 "110":
 {
     "Test Number": 110,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Mag Calibration",
     "PC scripts": [ "Mag_Calibration.py" ],
@@ -106,7 +106,7 @@
 "120":
 {
     "Test Number": 120,
-    "Time":15,
+    "Duration":15,
     "Enabled": "yes",
     "Test Name": "Acc Calibration",
     "PC scripts": [ "Acc_Calibration.py" ],
@@ -116,7 +116,7 @@
 "130":
 {
     "Test Number": 130,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Verify Gyro Calibration in EEPROM",
     "PC scripts": [ "Verify_Gyro_Calibration_in_EEPROM.py" ],
@@ -125,7 +125,7 @@
 "140":
 {
     "Test Number": 140,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Verify Mag Calibration in EEPROM",
     "PC scripts": [ "Verify_Mag_Calibration_in_EEPROM.py" ],
@@ -134,7 +134,7 @@
 "150":
 {
     "Test Number": 150,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "Verify Cam calibration in EEPROM",
     "PC scripts": [ "Verify_Cam_calibration_in_EEPROM.py" ],
@@ -143,7 +143,7 @@
 "160":
 {
     "Test Number": 160,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "Test Bad Pixels",
     "PC scripts": [ "Test_Bad_Pixels.py" ],
@@ -152,7 +152,7 @@
 "170":
 {
     "Test Number": 170,
-    "Time":6,
+    "Duration":6,
     "Enabled": "yes",
     "Test Name": "Test Occlusion",
     "PC scripts": [ "Test_Occlusion.py"],
@@ -161,7 +161,7 @@
 "180":
 {
     "Test Number": 180,
-    "Time":6,
+    "Duration":6,
     "Enabled": "yes",
     "Test Name": "Test Acc",
     "PC scripts": [ "Test_Acc.py"],
@@ -170,7 +170,7 @@
 "190":
 {
     "Test Number": 190,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Test Gyro",
     "PC scripts": [ "Test_Gyro.py"],
@@ -180,7 +180,7 @@
 "200":
 {
     "Test Number": 200,
-    "Time":6,
+    "Duration":6,
     "Enabled": "yes",
     "Test Name": "Test Thermal",
     "PC scripts": [ "Test_Thermal.py"],
@@ -189,7 +189,7 @@
 "210":
 {
     "Test Number": 210,
-    "Time":9,
+    "Duration":9,
     "Enabled": "yes",
     "Test Name": "Test Fan",
     "PC scripts": [ "Test_Fan.py"],
@@ -198,7 +198,7 @@
 "220":
 {
     "Test Number": 220,
-    "Time":8,
+    "Duration":8,
     "Enabled": "yes",
     "Test Name": "Test Focus",
     "PC scripts": [ "Test_Focus.py"],
@@ -207,7 +207,7 @@
 "230":
 {
     "Test Number": 230,
-    "Time":5,
+    "Duration":5,
     "Enabled": "yes",
     "Test Name": "Test Lens issues",
     "PC scripts": [ "Test_Lens_issues.py"],
@@ -217,7 +217,7 @@
 {
     "Test Number": 240,
     "Enabled": "yes",
-    "Time":6,
+    "Duration":6,
     "Test Name": "Test CANbus comm",
     "PC scripts": [ "Test_CANbus_comm.py"],
     "Recommend on Fail": "Check camera module connectivity"
@@ -225,7 +225,7 @@
 "250":
 {
     "Test Number": 250,
-    "Time":7,
+    "Duration":7,
     "Enabled": "yes",
     "Test Name": "Yaw Calibration",
     "PC scripts": [ "Yaw_Calibration.py"],
@@ -234,7 +234,7 @@
 "260":
 {
     "Test Number": 260,
-    "Time":12,
+    "Duration":12,
     "Enabled": "yes",
     "Test Name": "Install TLV Script",
     "PC scripts": [ "Install_TLV_Script.py"],
@@ -243,7 +243,7 @@
 "270":
 {
     "Test Number": 270,
-    "Time":15,
+    "Duration":15,
     "Enabled": "yes",
     "Test Name": "Uninstall  TLV Script",
     "PC scripts": ["Uninstall_TLV_Script.py"],

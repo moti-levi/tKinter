@@ -32,7 +32,7 @@ class JsonGetTestScriptFiles:
         data = json.load(f)
         #definitionData=data.get(definition)
         for scriptNum in scriptNumber:
-            scriptFilesTime=data.get(str(scriptNum)).get('Time')            
+            scriptFilesTime=data.get(str(scriptNum)).get('Duration')            
             retList.append(int(scriptFilesTime))
         # Closing file
         f.close()
