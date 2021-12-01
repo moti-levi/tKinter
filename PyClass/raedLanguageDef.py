@@ -15,7 +15,7 @@ class JsonDefinitionLanguage:
         RetDict={}
         with open('Lang\Language_definitions.json', encoding="utf-8") as f:
             data = json.load(f)
-            print(data)
+            # print(data)
        
         # data = json.load(f)                
         for i in data.get(definitionLang)['Test Suites']:

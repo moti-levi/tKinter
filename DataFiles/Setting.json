@@ -3,9 +3,10 @@
 {
    "Tester Type": "Module Calibration",
    "Version": "1.0",
-   "Language": "Hebrew",
+   "Language": "English",
    "Show R&D button": "yes",
    "Show Retry Failures button": "yes",
+   "Connectivity": "LAN",
    "Retry On Failure": "No"
 }
 }

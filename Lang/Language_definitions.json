@@ -21,7 +21,8 @@
         "Robot Test Title": "ארגו - בדיקות סופיות",    
         "Station Label": "תחנה",
         "Module Type Label": "סוג מודול",
-        "Camera OTP Label": "מזהה מצלמה"
+        "Camera OTP Label": "מזהה מצלמה",
+        "Site Label":"אתר"
     }
 }
 }

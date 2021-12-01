@@ -42,6 +42,7 @@ _LangdefinitionDataDic:any
 #endregion
 
 
+
 #region Read setting Json
 data=Rj.ReadJson('DataFiles\Setting.json')
 _generaldate=data.get("General")
@@ -84,7 +85,7 @@ if(_TestType=="Housing Tests"):
 	mw.geometry('400x400')
 else:
 	mw.geometry('400x260')
-mw.title('R-Go ' + _TestType+ ' ' + _Version)
+mw.title('R-Go ' + _LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
 
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
@@ -96,7 +97,8 @@ mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 #endregion
 
 #region Site
-ttk.Label(mw, text = "Site:",anchor='w',justify='left',
+
+ttk.Label(mw, text = str(_LangdefinitionDataDic['Site Label']),anchor='w',justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 SiteCmb = tk.StringVar()
@@ -112,7 +114,7 @@ stn = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
 stn['values'] = ('1','2','3')
 stn.grid(column = 1, row = _row_num)
 
-ttk.Label(mw, text = "station :",justify='left',
+ttk.Label(mw, text = _LangdefinitionDataDic['Station Label'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 
@@ -121,7 +123,7 @@ _row_num=_row_num+1
 
 #region ModuleType
 if(_SelectModuleType):
-	ttk.Label(mw, text = "Module Type :",
+	ttk.Label(mw, text = _LangdefinitionDataDic['Module Type Label'],
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 
@@ -186,7 +188,7 @@ if(_ReadSOMSN):
 #endregion
 
 #region CameraOTP
-ttk.Label(mw, text = "Camera Opt :",justify='left',
+ttk.Label(mw, text = _LangdefinitionDataDic['Camera OTP Label'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 btnReadCamOtp = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
@@ -249,6 +251,12 @@ def StartTesting():
 	ElapsetTimelbl.grid(sticky = 'W',column = 1,
 		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
+	# ETAlblMinSec=ttk.Label(top, text = "",justify='center',
+	# 	font = ("Times New Roman", 20))
+
+	# ETAlbl.grid(sticky = 'W',column = 0,
+	# 	row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
+
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
 

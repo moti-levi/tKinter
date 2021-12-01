@@ -16,7 +16,6 @@
     "Test Name": "DB Connectivity Test",
     "PC scripts": [ "DB_Connectivity_Test.py" ],
     "Recommend on Fail": "Check camera module connectivity"
-
 },
 "30":
 {
