@@ -37,11 +37,12 @@ _Eta:int=0
 _lay=[]
 _scriptDataSrc=[]
 _scriptRunTime=[]
-__RetryOnFailyre:bool
+_RetryOnFailyre:bool
+_RandDTestDict=[]
 _LangdefinitionDataDic:any
 #for r & D only tests if the user select the option to create on the fly R&D check
 _RAndDOnlyFlagTest:bool
-var = dict()
+_chkBoxvar = dict()
 #endregion
 
 
@@ -216,32 +217,29 @@ def RAndDOnlyTest():
 	rowNum:int=0
 	ColNum:int=0
 	# var = dict()
-	count=1
+	# count=1
 	for i in _scriptNameAndNumber:
-		var[i]= _scriptNameAndNumber[i]
+		_chkBoxvar[i]= _scriptNameAndNumber[i]
 		
 		if ColNum==2:
 			ColNum=0
 			rowNum+=1
 
-		# checkButton = ttk.Checkbutton(top, text = i['Test Name'], variable = ttk.StringVar(), 
-		# 		onvalue = i['Test Number'], offvalue = "0", height=2,
-		# 		width = 0, justify=ttk.LEFT)
-
-		
-
-		checkButton = tk.Checkbutton(top, text=i, variable=var[i], 
+		checkButton = tk.Checkbutton(top, text=i, variable=_chkBoxvar[i], 
                       command=lambda key=i: SelectRAndDTesting(key))    			
-
-		# checkButton=tk.Checkbutton(top,text=i,command=SelectRAndDTesting,
-		# 		onvalue=int(_scriptNameAndNumber[i]), offvalue=0)
 
 		checkButton.grid(sticky = 'W',column = ColNum,
 					row=rowNum, padx = 10, pady = _gcmbPaddy)
 		ColNum=ColNum+1
-		count += 1	
+		checkButton.deselect()
+		# checkButton.select()
+		if _scriptNameAndNumber[i] in _Tests:
+			_RandDTestDict.append(_scriptNameAndNumber[i])
+			checkButton.select()
+		
+		# count += 1	
 
-	btnTestStart = tk.Button(top, text='Save', command=lambda: SelectRAndDTesting()
+	btnTestStart = tk.Button(top, text='Save', command=lambda: SaveRAndDTesting()
 	,bg='blue', fg='white',width = 15)
 	btnTestStart.grid(row=rowNum+1, column=0)
 
@@ -249,11 +247,41 @@ def RAndDOnlyTest():
 	,bg='Red', fg='white',width = 15)
 	btnTestStart.grid(row=rowNum+1, column=1)
 
-def SelectRAndDTesting(key):
-	global _RAndDOnlyFlagTest
-	_RAndDOnlyFlagTest=True
-	print(var.get(key))
 
+#region craete on the fly test list for R&D Only
+def SelectRAndDTesting(key):
+	global _RandDTestDict
+	global _RAndDOnlyFlagTest
+	_RAndDOnlyFlagTest=True	
+	# print(_chkBoxvar.get(key))
+	if _chkBoxvar.get(key) in  _RandDTestDict:
+		_RandDTestDict.remove(_chkBoxvar.get(key))
+		# print(_chkBoxvar.get(key))
+	else:
+		_RandDTestDict.append(_chkBoxvar.get(key))
+#endregion
+
+#region Save R&D esting
+def SaveRAndDTesting():
+	global _Eta
+	global _scriptDataSrc
+	global _Tests		
+	if len(_RandDTestDict)>0:	
+		gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionFile('DataFiles\Test_Suite_definition.json',
+		'Tests',_RandDTestDict,_TestType)
+	#region get test python script from Test_definition.json
+	definitionData=Rjdefinition.JsonDefinitionReader.ReadJsonDefinition('DataFiles\Test_Suite_definition.json',_TestType)
+	_Tests=definitionData.get("Tests")
+	_scriptDataSrc=gTscr.JsonGetTestScriptFiles.ReadTestScriptFiles('DataFiles\Test_definition.json',_Tests)
+	#endregion
+	#region Calc all script Time
+	_scriptRunTime=gTscr.JsonGetTestScriptFiles.ReadTestScriptFilesRunTime('DataFiles\Test_definition.json',_Tests)
+	_Eta=0
+	for t in _scriptRunTime:
+		_Eta+=int(t)
+	#endregion
+	exit_btn()
+#endregion
 
 def StartTesting():
 	top = tk.Toplevel()
@@ -374,6 +402,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		#endregion
 		if(test_module.RetVal!='Pass'):
 			TestPass=False
+			
 			if(_RetryOnFailyre==False):
 				break
 		print(test_module.RetVal)				
