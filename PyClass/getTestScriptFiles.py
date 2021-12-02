@@ -37,7 +37,24 @@ class JsonGetTestScriptFiles:
         # Closing file
         f.close()
         return retList
-
+        
+    def ReadDefinisionFileNameAndNumber(_jsonFileName):
+        # Opening JSON file
+        f = open(str(_jsonFileName))
+         # returns JSON object as
+        # a dictionary
+        RetDict={}
+        with open(_jsonFileName, encoding="utf-8") as f:
+            data = json.load(f)
+            # print(data)
+       
+        for i in data:
+            scriptFile=data[i]['Test Name']
+            scriptNum=data[i]['Test Number']
+            RetDict[scriptFile]=scriptNum        
+        # Closing file
+        f.close()
+        return RetDict
     def __del__(self):
       class_name = self.__class__.__name__
     #   print class_name, "destroyed"

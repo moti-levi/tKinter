@@ -7,7 +7,7 @@ import tkinter as tk
 import importlib
 import importlib.util
 import queue
-from tkinter import ttk
+from tkinter import IntVar, ttk
 from PIL import ImageTk,Image
 from readJson import JsonReader as Rj
 from PyClass import readTestSuiteDefinition as Rjdefinition
@@ -39,6 +39,9 @@ _scriptDataSrc=[]
 _scriptRunTime=[]
 __RetryOnFailyre:bool
 _LangdefinitionDataDic:any
+#for r & D only tests if the user select the option to create on the fly R&D check
+_RAndDOnlyFlagTest:bool
+var = dict()
 #endregion
 
 
@@ -200,6 +203,57 @@ _row_num=_row_num+1
 #endregion
 
 #region fuction
+def RAndDOnlyTest():
+	top = tk.Toplevel()
+	mw.withdraw()
+	_lay.append(top)
+
+	top.title('R-Go ' + _LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
+	
+	top.geometry('450x660')
+	
+	_scriptNameAndNumber=gTscr.JsonGetTestScriptFiles.ReadDefinisionFileNameAndNumber('DataFiles\Test_definition.json')
+	rowNum:int=0
+	ColNum:int=0
+	# var = dict()
+	count=1
+	for i in _scriptNameAndNumber:
+		var[i]= _scriptNameAndNumber[i]
+		
+		if ColNum==2:
+			ColNum=0
+			rowNum+=1
+
+		# checkButton = ttk.Checkbutton(top, text = i['Test Name'], variable = ttk.StringVar(), 
+		# 		onvalue = i['Test Number'], offvalue = "0", height=2,
+		# 		width = 0, justify=ttk.LEFT)
+
+		
+
+		checkButton = tk.Checkbutton(top, text=i, variable=var[i], 
+                      command=lambda key=i: SelectRAndDTesting(key))    			
+
+		# checkButton=tk.Checkbutton(top,text=i,command=SelectRAndDTesting,
+		# 		onvalue=int(_scriptNameAndNumber[i]), offvalue=0)
+
+		checkButton.grid(sticky = 'W',column = ColNum,
+					row=rowNum, padx = 10, pady = _gcmbPaddy)
+		ColNum=ColNum+1
+		count += 1	
+
+	btnTestStart = tk.Button(top, text='Save', command=lambda: SelectRAndDTesting()
+	,bg='blue', fg='white',width = 15)
+	btnTestStart.grid(row=rowNum+1, column=0)
+
+	btnTestStart = tk.Button(top, text='Cancel', command=lambda:exit_btn()
+	,bg='Red', fg='white',width = 15)
+	btnTestStart.grid(row=rowNum+1, column=1)
+
+def SelectRAndDTesting(key):
+	global _RAndDOnlyFlagTest
+	_RAndDOnlyFlagTest=True
+	print(var.get(key))
+
 
 def StartTesting():
 	top = tk.Toplevel()
@@ -363,7 +417,7 @@ def Button_Clicker(newnum):
 
 #region button opperation
 if(_showRDBtn):
-	btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: Button_Clicker(1),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = _row_num)
+	btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: RAndDOnlyTest(),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = _row_num)
 
 btnTestStart = tk.Button(mw, text='Calibrate', command=lambda: StartTesting(),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
 
