@@ -40,7 +40,7 @@ class JsonGetTestScriptFiles:
         
     def ReadDefinisionFileNameAndNumber(_jsonFileName):
         # Opening JSON file
-        f = open(str(_jsonFileName))
+        # f = open(str(_jsonFileName))
          # returns JSON object as
         # a dictionary
         RetDict={}
@@ -55,6 +55,22 @@ class JsonGetTestScriptFiles:
         # Closing file
         f.close()
         return RetDict
+
+    def UpdateJsonDefinitionFile(_jsonFileName,_jsonSection,_data,_TestType):
+        # Opening JSON file
+        
+        with open(_jsonFileName, 'r') as f:
+            json_data = json.load(f)            
+            for i in json_data:
+                if i==_TestType:
+                    json_data[i][_jsonSection]=_data                
+        
+        with open(_jsonFileName, 'w') as f:
+            f.write(json.dumps(json_data))        
+            # Closing file
+            f.close()
+        
+    
     def __del__(self):
       class_name = self.__class__.__name__
     #   print class_name, "destroyed"
