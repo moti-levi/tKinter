@@ -9,7 +9,14 @@
     "Site Label":"Site",
     "Station Label": "Station",
     "Module Type Label": "Module Type",
-    "Camera OTP Label": "Camera OTP"
+    "Camera OTP Label": "Camera OTP",
+    "RobotSN":"Robot S/N",
+    "Robot Type":"Robot Type",
+    "Housing SN" :"Housing S/N",
+    "TLVSN":"TLV S/N",
+    "SOM S/N":"SOM S/N"   ,
+    "MinuteLabel":"Minute",
+    "SecondsLabel":"Seconds"
     }
 },
 "Hebrew": 
@@ -22,7 +29,14 @@
         "Station Label": "תחנה",
         "Module Type Label": "סוג מודול",
         "Camera OTP Label": "מזהה מצלמה",
-        "Site Label":"אתר"
+        "Site Label":"אתר",
+        "RobotSN":"מקט רובוט",
+        "Robot Type":"סוג רובוט",
+        "Housing SN" :"מקט מארז",
+        "TLVSN":"מקט TLV",
+        "SOM S/N":"מקט מעבד",
+        "MinuteLabel":"דקות",
+        "SecondsLabel":"שניות"
     }
 }
 }

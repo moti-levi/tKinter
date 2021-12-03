@@ -1,9 +1,9 @@
 {
 "General": 
 {
-   "Tester Type": "Module Calibration",
+   "Tester Type": "Housing Tests",
    "Version": "1.0",
-   "Language": "English",
+   "Language": "Hebrew",
    "Show R&D button": "yes",
    "Show Retry Failures button": "yes",
    "Connectivity": "LAN",

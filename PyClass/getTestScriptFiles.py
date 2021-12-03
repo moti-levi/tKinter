@@ -1,4 +1,5 @@
 import json
+#handle Test_definition.json 
 
 class JsonGetTestScriptFiles:   
     #read json file class 
@@ -69,7 +70,21 @@ class JsonGetTestScriptFiles:
             f.write(json.dumps(json_data))        
             # Closing file
             f.close()
+    #update last succeess test time at Test_definition.json 
+    def UpdateJsonDefinitionSuccessTime(_jsonFileName,CurrentTestTime,TestName):
+        # Opening JSON file
         
+        with open(_jsonFileName, 'r') as f:
+            json_data = json.load(f)            
+            for i in json_data:
+                if TestName in json_data[i]['PC scripts']:
+                    json_data[i]['Duration']=CurrentTestTime                
+        
+        with open(_jsonFileName, 'w') as f:
+            f.write(json.dumps(json_data))        
+            # Closing file
+            f.close()
+
     
     def __del__(self):
       class_name = self.__class__.__name__

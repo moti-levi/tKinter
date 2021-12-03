@@ -1,1 +1,51 @@
-{"Module Calibration": {"Station_Type": "Module", "CUSTOMER": "<<GUID>>", "Select Module Type": "yes", "Select Robot Type": "no", "Read Camera OTP": "yes", "Read Housing Barcode": "no", "Read TLV SN": "no", "Read SOM SN": "no", "Retrieve Housing SN": "no", "Tests": [40, 50, 100, 110, 140, 160, 170, 180, 200, 210, 220, 230, 250, 260, 130, 120, 80, 40, 50, 80, 100, 110, 120, 130, 140, 160, 170, 180, 200, 210, 220, 230, 250, 260, 10, 30, 10, 30, 40, 50, 80, 100, 110, 120, 130, 140, 160, 170, 180, 200, 210, 220, 230, 250, 260, 270]}, "Housing Tests": {"Station_Type": "Housing", "CUSTOMER": "<<GUID>>", "Select Module Type": "no", "Select Robot Type": "no", "Read Camera OTP": "yes", "Read Housing Barcode": "yes", "Read TLV SN": "yes", "Read SOM SN": "yes", "Retrieve Housing SN": "yes", "Tests": [130, 180, 210, 260]}, "Robot Tests": {"Station_Type": "Robot", "CUSTOMER": "<<GUID>>", "Select Module Type": "no", "Select Robot Type": "yes", "Read Camera OTP": "yes", "Read Housing Barcode": "no", "Read TLV SN": "no", "Read SOM SN": "no", "Retrieve Housing SN": "yes", "Tests": [130, 180, 210, 260]}}
+{
+    "Module Calibration": {
+        "Station_Type": "Module",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "yes",
+        "Select Robot Type": "no",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "no",
+        "Read TLV SN": "no",
+        "Read SOM SN": "no",
+        "Retrieve Housing SN": "no",
+        "Tests": [
+            10,
+            30
+        ]
+    },
+    "Housing Tests": {
+        "Station_Type": "Housing",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "no",
+        "Select Robot Type": "no",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "yes",
+        "Read TLV SN": "yes",
+        "Read SOM SN": "yes",
+        "Retrieve Housing SN": "yes",
+        "Tests": [
+            130,
+            180,
+            210,
+            260
+        ]
+    },
+    "Robot Tests": {
+        "Station_Type": "Robot",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "no",
+        "Select Robot Type": "yes",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "no",
+        "Read TLV SN": "no",
+        "Read SOM SN": "no",
+        "Retrieve Housing SN": "yes",
+        "Tests": [
+            130,
+            180,
+            210,
+            260
+        ]
+    }
+}

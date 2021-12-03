@@ -191,6 +191,20 @@ if(_ReadSOMSN):
 	_row_num=_row_num+1
 #endregion
 
+#region Robot S/N
+if _ReadTLVSN:
+	RobotSN = tk.StringVar()
+	RobotSNCmb = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
+	stn['values'] = ('1','2','3')
+	stn.grid(column = 1, row = _row_num)
+
+	ttk.Label(mw, text = _LangdefinitionDataDic['RobotSN'],justify='left',
+			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+			row = _row_num, padx = 10, pady = _gcmbPaddy)
+
+_row_num=_row_num+1
+#endregion
+
 #region CameraOTP
 ttk.Label(mw, text = _LangdefinitionDataDic['Camera OTP Label'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
@@ -287,19 +301,42 @@ def StartTesting():
 	top = tk.Toplevel()
 	mw.withdraw()
 	_lay.append(top)
-
+	_row_num:int=0
 	top.title("Calibration in progress...")
 	
 	top.geometry('320x300')
+	if _TestType=="Housing Tests":
+		Headerlbl=ttk.Label(top, text = "Testing in progress...",anchor='w',justify='left',
+			font = ("Times New Roman", 20))
+	else:
+		Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
+			font = ("Times New Roman", 20))
 	
-	Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
-		font = ("Times New Roman", 20))
-	
-	Headerlbl.grid(sticky = 'W',column = 0,row = 0, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	Headerlbl.grid(sticky = 'W',column = 0,row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	_row_num+=1
+
+	if(_RetrieveHousingSN):
+		ttk.Label(mw, text = "Housing S/N :" +_CameraOTP,justify='left',
+			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+			row = _row_num, padx = 10, pady = _gcmbPaddy)
+
+	if(_ReadTLVSN):
+		ttk.Label(mw, text = "TLV S/N :"+_CameraOTP,justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 1,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		_row_num+=1
 
 	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP ,anchor='w',justify='left',
-		font = ("Times New Roman", 15)).grid(sticky = 'W',column = 0,
-		row = 1, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+
+	if(_ReadSOMSN):
+		txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
+		font = ("Times New Roman", 10))		
+		txtSomsn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+
+	_row_num+=1
+	
 	
 	# progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
 	# 		length = 300, mode = 'determinate')
@@ -320,18 +357,20 @@ def StartTesting():
 	progress = ttk.Progressbar(top, style='text.Horizontal.TProgressbar', length=200,
                                maximum=_Eta, value=0)
 
-	progress.grid(column = 0,row = 2, padx = 10, pady = 10,columnspan=2)						   
+	progress.grid(column = 0,row = _row_num, padx = 10, pady = 10,columnspan=2)						   
+
+	_row_num+=1
 
 	ETAlbl=ttk.Label(top, text = "ETA :",justify='center',
-		font = ("Times New Roman", 20))
+		font = ("Times New Roman", 15))
 
 	ETAlbl.grid(sticky = 'W',column = 0,
-		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
 	ElapsetTimelbl=ttk.Label(top, text = str(_Eta)  ,anchor='w',justify='left',
 		font = ("Times New Roman", 15))
 	ElapsetTimelbl.grid(sticky = 'W',column = 1,
-		row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
 	# ETAlblMinSec=ttk.Label(top, text = "",justify='center',
 	# 	font = ("Times New Roman", 20))
@@ -339,11 +378,13 @@ def StartTesting():
 	# ETAlbl.grid(sticky = 'W',column = 0,
 	# 	row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
 
+	_row_num+=1
+
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
-	btn.grid(row = 4,column = 0, sticky="nsew",padx = 10)
+	btn.grid(row = _row_num,column = 0, sticky="nsew",padx = 10)
 
 	btn2 = tk.Button(top,text='Done',bg='green', fg='white',width = 8,anchor="c",command=exit_btn,state='disabled')
-	btn2.grid(row = 4,column = 1,sticky="nsew",padx = 10)
+	btn2.grid(row = _row_num,column = 1,sticky="nsew",padx = 10)
 
 	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btn2))
 	th.start()
@@ -352,11 +393,10 @@ def StartTesting():
 #region progress
 def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		btn2):
-	import queue
+	# import queue
 	global _Eta
 	TestPass:bool=True
-	runthreads = []
-	# exec(open('CallibrationFile\Acc_Calibration.py'))	
+	runthreads = []	
 	elapsedTime=0
 	inetvalPB=_Eta		
 	TestIndex=0	
@@ -384,12 +424,16 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 			CurrentTestTime+=1		
 			elapsedTime=elapsedTime+1
 			inetvalPB=inetvalPB-1
-			ElapsetTimelbl['text'] = str(inetvalPB)
-
-			if(elapsedTime<_Eta-2):
+			if inetvalPB>59:
+				ElapsetTimelbl['text'] =str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
+			else:
+				if inetvalPB>0:
+					ElapsetTimelbl['text'] = str(inetvalPB) + ' Seconds'
+			if(elapsedTime<=_Eta-2):
 				percentage = round(elapsedTime/_Eta * 100)  # Calculate percentage.
 				progress.config(value=elapsedTime)
 				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(percentage))
+				print(str(elapsedTime))
 			else:
 				progress.config(value=100)
 				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))
@@ -401,13 +445,18 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 					runthreads.pop(0)
 		#endregion
 		if(test_module.RetVal!='Pass'):
-			TestPass=False
-			
+			TestPass=False			
 			if(_RetryOnFailyre==False):
 				break
+		else:
+			gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionSuccessTime('DataFiles\Test_definition.json',
+				CurrentTestTime,script)
+
 		print(test_module.RetVal)				
 		#in case that the test take longer from that expected
-		if(CurrentTestTime>_scriptRunTime[TestIndex]):
+		#or case that the test was  shorter from that expected
+		if(CurrentTestTime>_scriptRunTime[TestIndex] or 
+			CurrentTestTime<_scriptRunTime[TestIndex]):
 			elapsedTime=StartEtaTime+int(_scriptRunTime[TestIndex])
 			inetvalPB=StartinetvalPB-int(_scriptRunTime[TestIndex])
 		TestIndex=TestIndex+1
