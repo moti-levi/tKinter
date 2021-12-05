@@ -14,9 +14,13 @@
     "Robot Type":"Robot Type",
     "Housing SN" :"Housing S/N",
     "TLVSN":"TLV S/N",
-    "SOM S/N":"SOM S/N"   ,
+    "SOMSN":"SOM S/N"   ,
     "MinuteLabel":"Minute",
-    "SecondsLabel":"Seconds"
+    "SecondsLabel":"Seconds",
+    "Compute Type":"Compute Type",
+    "Barcode":"Barcode",
+    "RAndDOnly":"R&D only",
+    "Calibrate":"Calibrate"
     }
 },
 "Hebrew": 
@@ -34,9 +38,14 @@
         "Robot Type":"סוג רובוט",
         "Housing SN" :"מקט מארז",
         "TLVSN":"מקט TLV",
-        "SOM S/N":"מקט מעבד",
+        "SOMSN":"מקט מעבד",
         "MinuteLabel":"דקות",
-        "SecondsLabel":"שניות"
+        "SecondsLabel":"שניות",
+        "Compute Type":"סוג מחשב",
+        "Barcode":"ברקוד",
+        "Read":"קרא",
+        "RAndDOnly":"פיתוח בלבד",
+        "Calibrate":"כיול"
     }
 }
 }

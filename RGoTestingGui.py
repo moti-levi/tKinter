@@ -113,14 +113,16 @@ _row_num=_row_num+1
 #endregion Site
 
 #region Station
+
+ttk.Label(mw, text = _LangdefinitionDataDic['Station Label'],justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+
 StationCmb = tk.StringVar()
 stn = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
 stn['values'] = ('1','2','3')
 stn.grid(column = 1, row = _row_num)
 
-ttk.Label(mw, text = _LangdefinitionDataDic['Station Label'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
 
 _row_num=_row_num+1
 #endregion
@@ -133,7 +135,7 @@ if(_SelectModuleType):
 
 	ModuleTypeCmb = tk.StringVar()
 	module = ttk.Combobox(mw, width = 27,textvariable = ModuleTypeCmb)
-	module['values'] = ('1','2','3')
+	module['values'] = ('5','2','3')
 	module.grid(column = 1, row = _row_num)
 	module.current(1)
 	_row_num=_row_num+1
@@ -141,13 +143,13 @@ if(_SelectModuleType):
 
 #region Compute Type
 if(_TestType=="Housing Tests"):
-	ttk.Label(mw, text = "Compute Type :",justify='left',
+	ttk.Label(mw, text = _LangdefinitionDataDic['Compute Type'],justify='left',
 			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 			row = _row_num, padx = 10, pady = _gcmbPaddy)
 
 	ComputeTypeCmb = tk.StringVar()
 	ComputeType = ttk.Combobox(mw, width = 27,textvariable = ComputeTypeCmb)
-	ComputeType['values'] = ('1','2','3')
+	ComputeType['values'] = ('1','2','9')
 	ComputeType.grid(column = 1, row = _row_num)
 	_row_num=_row_num+1
 #endregion
@@ -155,7 +157,7 @@ if(_TestType=="Housing Tests"):
 #region Housing
 if(_RetrieveHousingSN):
 
-	ttk.Label(mw, text = "Housing S/N :",justify='left',
+	ttk.Label(mw, text = _LangdefinitionDataDic['Housing SN'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 
@@ -163,53 +165,56 @@ if(_RetrieveHousingSN):
 		font = ("Times New Roman", 10))
 	txtHousting.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
 
-	btnBarcode = tk.Button(mw, text='Barcode', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row =_row_num)
+	btnBarcode = tk.Button(mw, text=_LangdefinitionDataDic['Barcode'], command=lambda: Button_Clicker(1),bg='blue', fg='white',
+		width=_BtnWidth).grid(column = 2, row =_row_num)
 	_row_num=_row_num+1
 #endregion
 
 #region TLV SN
 if(_ReadTLVSN):
-	ttk.Label(mw, text = "TLV S/N :",justify='left',
+	ttk.Label(mw, text = _LangdefinitionDataDic['TLVSN'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 	txtTlvSn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
 	txtTlvSn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
-	btnReadTlvSn = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+	btnReadTlvSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
 	_row_num=_row_num+1
 #endregion
 
 #region SOM S/N
 if(_ReadSOMSN):
+	ttk.Label(mw, text = _LangdefinitionDataDic['SOMSN'],justify='left',
+		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy)
+
 	txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
 	txtSomsn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
-	ttk.Label(mw, text = "SOM S/N:",justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
-	btnReadSomSn = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+	
+	btnReadSomSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
 	_row_num=_row_num+1
 #endregion
 
 #region Robot S/N
 if _ReadTLVSN:
-	RobotSN = tk.StringVar()
-	RobotSNCmb = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
-	stn['values'] = ('1','2','3')
-	stn.grid(column = 1, row = _row_num)
 
-	ttk.Label(mw, text = _LangdefinitionDataDic['RobotSN'],justify='left',
+	tk.Label(mw, text = _LangdefinitionDataDic['RobotSN'],justify='left',
 			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 			row = _row_num, padx = 10, pady = _gcmbPaddy)
 
-_row_num=_row_num+1
+	RobotSN = tk.StringVar()
+	RobotSNCmb = ttk.Combobox(mw, width = 27,textvariable = RobotSN)
+	RobotSNCmb['values'] = ('1','2','3')
+	RobotSNCmb.grid(column = 1, row = _row_num)
+	_row_num=_row_num+1
 #endregion
 
 #region CameraOTP
 ttk.Label(mw, text = _LangdefinitionDataDic['Camera OTP Label'],justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
-btnReadCamOtp = tk.Button(mw, text='Read', command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+btnReadCamOtp = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
 
 txtCameraOpt = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
 		font = ("Times New Roman", 10))
@@ -495,9 +500,17 @@ def Button_Clicker(newnum):
 
 #region button opperation
 if(_showRDBtn):
-	btnRDOnly = tk.Button(mw, text='R & D Only', command=lambda: RAndDOnlyTest(),bg='#009999', fg='white',width=_BtnWidth).grid(column = 0, row = _row_num)
+	btnRDOnly = tk.Button(mw, 
+	command=lambda: RAndDOnlyTest(),bg='#009999',
+	 fg='white',width=_BtnWidth)
+	btnRDOnly.grid(column = 0, row = _row_num)
+	btnRDOnly.config(text=_LangdefinitionDataDic['RAndDOnly'])
+	
 
-btnTestStart = tk.Button(mw, text='Calibrate', command=lambda: StartTesting(),bg='green', fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
+
+btnTestStart = tk.Button(mw, text=_LangdefinitionDataDic['Calibrate'], 
+ command=lambda: StartTesting(),bg='green',
+ fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
 
 _row_num=_row_num+1
 #endregion
