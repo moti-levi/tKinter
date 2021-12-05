@@ -332,8 +332,10 @@ def StartTesting():
 		_row_num+=1
 
 	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP ,anchor='w',justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		font = ("Times New Roman", 10))
+
+	CameraOTPlbl.grid(sticky = 'W',column = 0,
+		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)	
 
 	if(_ReadSOMSN):
 		txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
@@ -412,7 +414,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
 		test_module = importlib.util.module_from_spec(test_spec)		
 		test_spec.loader.exec_module(test_module)
-		print(test_module.RetVal)
+		# print(test_module.RetVal)
 		#create instance of the class
 		ScriptClass = test_module.Test()		
 		#endregion		
@@ -429,8 +431,17 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 			CurrentTestTime+=1		
 			elapsedTime=elapsedTime+1
 			inetvalPB=inetvalPB-1
+			newTime=str(int(inetvalPB/60))+ " Min :" 
+
+			if (int((inetvalPB%60)))>0:
+				newTime+=str((int((inetvalPB%60)))) + " Sec"
+			  
+			else:
+				 newTime+="0" + str((int((inetvalPB%60))))
+
 			if inetvalPB>59:
-				ElapsetTimelbl['text'] =str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
+				ElapsetTimelbl['text'] =str(newTime)
+				#str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
 			else:
 				if inetvalPB>0:
 					ElapsetTimelbl['text'] = str(inetvalPB) + ' Seconds'
@@ -438,7 +449,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 				percentage = round(elapsedTime/_Eta * 100)  # Calculate percentage.
 				progress.config(value=elapsedTime)
 				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(percentage))
-				print(str(elapsedTime))
+				# print(str(elapsedTime))
 			else:
 				progress.config(value=100)
 				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))
