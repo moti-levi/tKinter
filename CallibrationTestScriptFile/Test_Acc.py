@@ -6,6 +6,6 @@ RetVal=''
 class Test:
     
     def RunTest(self):		
-        time.sleep(6)
+        time.sleep(16)
         global RetVal
         RetVal='Pass'

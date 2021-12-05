@@ -19,8 +19,11 @@
     "SecondsLabel":"Seconds",
     "Compute Type":"Compute Type",
     "Barcode":"Barcode",
+    "Read":"Read",
     "RAndDOnly":"R&D only",
-    "Calibrate":"Calibrate"
+    "Calibrate":"Calibrate",
+    "CalibreationInprogress":"Calibration in progress...",
+    "Testing in progress:":"Testing in progress..."
     }
 },
 "Hebrew": 
@@ -45,7 +48,9 @@
         "Barcode":"ברקוד",
         "Read":"קרא",
         "RAndDOnly":"פיתוח בלבד",
-        "Calibrate":"כיול"
+        "Calibrate":"כיול",
+        "CalibreationInprogress":"מבצע כיול...",
+        "Testing in progress":"מבצע בדיקה..."
     }
 }
 }

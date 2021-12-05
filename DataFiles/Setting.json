@@ -3,10 +3,15 @@
 {
    "Tester Type": "Housing Tests",
    "Version": "1.0",
-   "Language": "Hebrew",
+   "Language": "English",
    "Show R&D button": "yes",
    "Show Retry Failures button": "yes",
    "Connectivity": "LAN",
-   "Retry On Failure": "No"
+   "Retry On Failure": "No",
+   "BigFontSize":"15",
+   "SmallFontSize":"20",
+   "BigFontSizeFamily":"Times New Roman",
+   "SmallFontFamily":"Times New Roman",
+   "Read SOM SN":"yes"
 }
 }

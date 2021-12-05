@@ -8,8 +8,8 @@ import importlib
 import importlib.util
 import queue
 from tkinter import IntVar, ttk
-from PIL import ImageTk,Image
-from readJson import JsonReader as Rj
+# from PIL import ImageTk,Image
+from PyClass import readJson as Rj
 from PyClass import readTestSuiteDefinition as Rjdefinition
 from PyClass import raedLanguageDef as RjLanguageReader
 from PyClass import getTestScriptFiles as gTscr
@@ -48,7 +48,7 @@ _chkBoxvar = dict()
 
 
 #region Read setting Json
-data=Rj.ReadJson('DataFiles\Setting.json')
+data=Rj.JsonReader.ReadJson('DataFiles\Setting.json')
 _generaldate=data.get("General")
 _TestType=_generaldate.get("Tester Type")
 _Version=_generaldate.get("Version")
@@ -303,44 +303,57 @@ def SaveRAndDTesting():
 #endregion
 
 def StartTesting():
+
 	top = tk.Toplevel()
-	mw.withdraw()
+	
 	_lay.append(top)
 	_row_num:int=0
+
+	mw.withdraw()
+	
+	top.geometry(mw.winfo_geometry())
+
+	
 	top.title("Calibration in progress...")
 	
-	top.geometry('320x300')
+	# top.geometry('320x300')
+
 	if _TestType=="Housing Tests":
-		Headerlbl=ttk.Label(top, text = "Testing in progress...",anchor='w',justify='left',
+		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['CalibreationInprogress'],anchor='w',justify='left',
 			font = ("Times New Roman", 20))
 	else:
-		Headerlbl=ttk.Label(top, text = "Calibration in progress...",anchor='w',justify='left',
+		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['Testing in progress'],anchor='w',justify='left',
 			font = ("Times New Roman", 20))
 	
 	Headerlbl.grid(sticky = 'W',column = 0,row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	_row_num+=1
 
 	if(_RetrieveHousingSN):
-		ttk.Label(mw, text = "Housing S/N :" +_CameraOTP,justify='left',
-			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-			row = _row_num, padx = 10, pady = _gcmbPaddy)
+		Housinglbl=ttk.Label(top, text = _LangdefinitionDataDic['Housing SN'] +_CameraOTP,justify='left',
+			font = ("Times New Roman", 10))
+			
+		Housinglbl.grid(sticky = 'W',column = 0,
+			row = _row_num, padx = 10, pady = _gcmbPaddy)		
 
 	if(_ReadTLVSN):
-		ttk.Label(mw, text = "TLV S/N :"+_CameraOTP,justify='left',
+		ttk.Label(top, text = _LangdefinitionDataDic['TLVSN'] +_CameraOTP,justify='left',
 		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 1,
 		row = _row_num, padx = 10, pady = _gcmbPaddy)
 		_row_num+=1
 
-	CameraOTPlbl=ttk.Label(top, text = "Camera OTP :"+_CameraOTP ,anchor='w',justify='left',
+	
+
+	if(_ReadSOMSN):
+		txtSomsn = tk.Label(top, text = _LangdefinitionDataDic['SOMSN'] +_CameraOTP,anchor='w',
+			justify='left',
+		font = ("Times New Roman", 10))		
+		txtSomsn.grid(sticky = 'W',row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+
+	CameraOTPlbl=ttk.Label(top, text = _LangdefinitionDataDic['Camera OTP Label'] +_CameraOTP ,anchor='w',justify='left',
 		font = ("Times New Roman", 10))
 
 	CameraOTPlbl.grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)	
-
-	if(_ReadSOMSN):
-		txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
-		font = ("Times New Roman", 10))		
-		txtSomsn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+		row = _row_num, padx = 10, pady = _gcmbPaddy)	
 
 	_row_num+=1
 	
@@ -369,7 +382,7 @@ def StartTesting():
 	_row_num+=1
 
 	ETAlbl=ttk.Label(top, text = "ETA :",justify='center',
-		font = ("Times New Roman", 15))
+		font = ("Times New Roman", 15))	
 
 	ETAlbl.grid(sticky = 'W',column = 0,
 		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
@@ -379,27 +392,29 @@ def StartTesting():
 	ElapsetTimelbl.grid(sticky = 'W',column = 1,
 		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
 	
-	# ETAlblMinSec=ttk.Label(top, text = "",justify='center',
-	# 	font = ("Times New Roman", 20))
+	_row_num+=1
 
-	# ETAlbl.grid(sticky = 'W',column = 0,
-	# 	row = 3, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	ETAlblMinSecWarning=ttk.Label(top, text = "",justify='center',
+	font = ("Times New Roman", 20))
+
+	ETAlblMinSecWarning.grid(sticky = 'W',column = 0,
+	row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
 
 	_row_num+=1
 
 	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
 	btn.grid(row = _row_num,column = 0, sticky="nsew",padx = 10)
 
-	btn2 = tk.Button(top,text='Done',bg='green', fg='white',width = 8,anchor="c",command=exit_btn,state='disabled')
+	btn2 = tk.Button(top,text='Done',bg='gray', fg='white',width = 8,anchor="c",command=exit_btn,state='disabled')
 	btn2.grid(row = _row_num,column = 1,sticky="nsew",padx = 10)
 
-	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btn2))
+	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btn2,ETAlblMinSecWarning))
 	th.start()
 	#bar(top,progress)
 
 #region progress
 def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
-		btn2):
+		btn2,ETAlblMinSecWarning):
 	# import queue
 	global _Eta
 	TestPass:bool=True
@@ -409,12 +424,13 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 	TestIndex=0	
 	#region Run all Test Scripts
 	for script in _scriptDataSrc:				
-		specName =script.split('.')		
+		specName =script.split('.')
+		print(script)		
 		#region load class Dynamic by Reflection
 		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
 		test_module = importlib.util.module_from_spec(test_spec)		
 		test_spec.loader.exec_module(test_module)
-		# print(test_module.RetVal)
+		print(test_module.RetVal)
 		#create instance of the class
 		ScriptClass = test_module.Test()		
 		#endregion		
@@ -426,22 +442,24 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		CurrentTestTime=0
 		StartEtaTime=elapsedTime
 		StartinetvalPB=inetvalPB
+		# print(str(_scriptRunTime[TestIndex]))
 		#region Thread Loop 
-		while len(runthreads) > 0:	
+		while len(runthreads) >0:	
 			CurrentTestTime+=1		
 			elapsedTime=elapsedTime+1
 			inetvalPB=inetvalPB-1
-			newTime=str(int(inetvalPB/60))+ " Min :" 
-
+			#print(str(CurrentTestTime))			
+			# if(CurrentTestTime<=_scriptRunTime[TestIndex]):
+			newTime=str(int(inetvalPB/60))+ " Min :"
+			# 'calc time str'
 			if (int((inetvalPB%60)))>0:
-				newTime+=str((int((inetvalPB%60)))) + " Sec"
-			  
+				newTime+=str((int((inetvalPB%60)))) + " Sec"			  
 			else:
-				 newTime+="0" + str((int((inetvalPB%60))))
+				newTime+="0" + str((int((inetvalPB%60))))
 
 			if inetvalPB>59:
 				ElapsetTimelbl['text'] =str(newTime)
-				#str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
+				# ElapsetTimelbl['text'] =str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
 			else:
 				if inetvalPB>0:
 					ElapsetTimelbl['text'] = str(inetvalPB) + ' Seconds'
@@ -452,22 +470,25 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 				# print(str(elapsedTime))
 			else:
 				progress.config(value=100)
-				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))
+				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))	
+				
+			# else:#'test time taking longer than expected'
+			# 	ETAlblMinSecWarning['text']=str('test time taking longer than expected')+"."
 
-			# progress['value'] = int(progress['value'])+inetvalPB
 			time.sleep(1)
 			for thread in runthreads:
 				if not thread.is_alive():				
 					runthreads.pop(0)
-		#endregion
-		if(test_module.RetVal!='Pass'):
-			TestPass=False			
-			if(_RetryOnFailyre==False):
-				break
-		else:
-			gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionSuccessTime('DataFiles\Test_definition.json',
-				CurrentTestTime,script)
-
+					print('pop')
+			#endregion
+			if(test_module.RetVal!='Pass'):
+				TestPass=False			
+				if(_RetryOnFailyre==False):
+					break
+			else:
+				gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionSuccessTime('DataFiles\Test_definition.json',
+					CurrentTestTime,script)
+			
 		print(test_module.RetVal)				
 		#in case that the test take longer from that expected
 		#or case that the test was  shorter from that expected
@@ -483,7 +504,7 @@ def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
 		ElapsetTimelbl.config(text='Fail',foreground='red')
 	ETAlbl.config(text="Result")
 	Headerlbl.config(text='Calibration completed')
-	btn2.config(state='normal')
+	btn2.config(state='normal',bg='green')
 	
 #endregion
 #region run Py test Script

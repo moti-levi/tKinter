@@ -1,1 +1,55 @@
-{"Module Calibration": {"Station_Type": "Module", "CUSTOMER": "<<GUID>>", "Select Module Type": "yes", "Select Robot Type": "no", "Read Camera OTP": "yes", "Read Housing Barcode": "no", "Read TLV SN": "no", "Read SOM SN": "no", "Retrieve Housing SN": "no", "Tests": [10, 30]}, "Housing Tests": {"Station_Type": "Housing", "CUSTOMER": "<<GUID>>", "Select Module Type": "no", "Select Robot Type": "no", "Read Camera OTP": "yes", "Read Housing Barcode": "yes", "Read TLV SN": "yes", "Read SOM SN": "yes", "Retrieve Housing SN": "yes", "Tests": [130, 180, 210, 260, 110, 120, 140, 200]}, "Robot Tests": {"Station_Type": "Robot", "CUSTOMER": "<<GUID>>", "Select Module Type": "no", "Select Robot Type": "yes", "Read Camera OTP": "yes", "Read Housing Barcode": "no", "Read TLV SN": "no", "Read SOM SN": "no", "Retrieve Housing SN": "yes", "Tests": [130, 180, 210, 260]}}
+{
+    "Module Calibration": {
+        "Station_Type": "Module",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "yes",
+        "Select Robot Type": "no",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "no",
+        "Read TLV SN": "no",
+        "Read SOM SN": "no",
+        "Retrieve Housing SN": "no",
+        "Tests": [
+            10,
+            30
+        ]
+    },
+    "Housing Tests": {
+        "Station_Type": "Housing",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "no",
+        "Select Robot Type": "no",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "yes",
+        "Read TLV SN": "yes",
+        "Read SOM SN": "yes",
+        "Retrieve Housing SN": "yes",
+        "Tests": [
+            130,
+            180,
+            210,
+            260,
+            110,
+            120,
+            140,
+            200
+        ]
+    },
+    "Robot Tests": {
+        "Station_Type": "Robot",
+        "CUSTOMER": "<<GUID>>",
+        "Select Module Type": "no",
+        "Select Robot Type": "yes",
+        "Read Camera OTP": "yes",
+        "Read Housing Barcode": "no",
+        "Read TLV SN": "no",
+        "Read SOM SN": "no",
+        "Retrieve Housing SN": "yes",
+        "Tests": [
+            130,
+            180,
+            210,
+            260
+        ]
+    }
+}
