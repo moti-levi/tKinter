@@ -81,7 +81,8 @@ class JsonGetTestScriptFiles:
                     json_data[i]['Duration']=CurrentTestTime                
         
         with open(_jsonFileName, 'w') as f:
-            f.write(json.dumps(json_data))        
+            # f.write(json.dumps(json_data))  
+            json.dump(json_data, f, ensure_ascii=True, indent=4, sort_keys=True)      
             # Closing file
             f.close()
 

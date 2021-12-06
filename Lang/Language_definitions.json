@@ -15,7 +15,7 @@
     "Housing SN" :"Housing S/N",
     "TLVSN":"TLV S/N",
     "SOMSN":"SOM S/N"   ,
-    "MinuteLabel":"Minute",
+    "MinuteLabel":"Minutes",
     "SecondsLabel":"Seconds",
     "Compute Type":"Compute Type",
     "Barcode":"Barcode",
@@ -23,7 +23,16 @@
     "RAndDOnly":"R&D only",
     "Calibrate":"Calibrate",
     "CalibreationInprogress":"Calibration in progress...",
-    "Testing in progress:":"Testing in progress..."
+    "Testing in progress":"Testing in progress...",
+    "Cancel":"Cancel",
+    "Done":"Done",
+    "Save":"Save",
+    "ETA":"ETA",
+    "Calibration completed":"Calibration completed",
+    "Result":"Result",
+    "Pass":"Pass",
+    "Fail":"Fail",
+    "LongTetsTime":"test time taking longer than expected."
     }
 },
 "Hebrew": 
@@ -50,7 +59,16 @@
         "RAndDOnly":"פיתוח בלבד",
         "Calibrate":"כיול",
         "CalibreationInprogress":"מבצע כיול...",
-        "Testing in progress":"מבצע בדיקה..."
+        "Testing in progress":"מבצע בדיקה...",
+        "Cancel":"בטל",
+        "Done":"סיום",
+        "Save":"שמור",
+        "ETA":"זמן נותר",
+        "Result":"תוצאה",
+        "Pass":"תקין",
+        "Fail":"נכשל",
+        "Calibration completed":"כיול הסתיים" ,
+        "LongTetsTime":"זמן הבדיקה ארוך מהרגיל."
     }
 }
 }

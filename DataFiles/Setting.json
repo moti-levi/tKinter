@@ -1,7 +1,7 @@
 {
 "General": 
 {
-   "Tester Type": "Housing Tests",
+   "Tester Type": "Module Calibration",
    "Version": "1.0",
    "Language": "English",
    "Show R&D button": "yes",
@@ -9,8 +9,8 @@
    "Connectivity": "LAN",
    "Retry On Failure": "No",
    "BigFontSize":"15",
-   "SmallFontSize":"20",
-   "BigFontSizeFamily":"Times New Roman",
+   "SmallFontSize":"10",
+   "BigFontFamily":"Times New Roman",
    "SmallFontFamily":"Times New Roman",
    "Read SOM SN":"yes"
 }

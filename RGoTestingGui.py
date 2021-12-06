@@ -17,6 +17,7 @@ from PyClass import getTestScriptFiles as gTscr
 
 #region global Var
 _gcmbPaddy=10
+_PadX=5
 _BtnWidth=8
 _row_num=0
 _TestType=""
@@ -33,6 +34,8 @@ _RetrieveHousingSN:bool
 _Language:str
 _Tests:any
 _Eta:int=0
+_BigFontSize:int=0
+_SmallFontSize:int=0
 # global _CamerOTP
 _lay=[]
 _scriptDataSrc=[]
@@ -40,9 +43,13 @@ _scriptRunTime=[]
 _RetryOnFailyre:bool
 _RandDTestDict=[]
 _LangdefinitionDataDic:any
+_BigFontSizeFamily:str=""
+_SmallFontFamily:str=""
 #for r & D only tests if the user select the option to create on the fly R&D check
 _RAndDOnlyFlagTest:bool
 _chkBoxvar = dict()
+_lblWidth:int=15
+_cmbWidth:int=25
 #endregion
 
 
@@ -56,6 +63,10 @@ _showRDBtn=1 if _generaldate.get("Show R&D button")=="yes"  else 0
 _ShowRetryFailuresbtn=1 if _generaldate.get("Show Retry Failures button")=="yes" else 0
 _Language=_generaldate.get("Language")
 _RetryOnFailyre=1 if(_generaldate.get("Retry On Failure"))=="Yes" else 0
+_BigFontSize=int(_generaldate.get("BigFontSize"))
+_SmallFontSize=int(_generaldate.get("SmallFontSize"))
+_BigFontFamily=str(_generaldate.get("BigFontFamily"))
+_SmallFontFamily=str(_generaldate.get("SmallFontFamily"))
 #endregion
 
 #region Languege Json
@@ -85,11 +96,15 @@ for t in _scriptRunTime:
 
 #region Creating tkinter main window
 mw = tk.Tk()
-if(_TestType=="Housing Tests"):
-	mw.geometry('400x400')
-else:
-	mw.geometry('400x260')
-mw.title('R-Go ' + _LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
+if(_TestType=="Module Calibration"):
+	mw.title(_LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
+	mw.geometry('450x260')
+elif _TestType=="Housing Tests":
+	mw.geometry('450x450')
+	mw.title(_LangdefinitionDataDic['Housing Test Title'] + ' ' + _Version)
+elif _TestType=="Robot Tests":
+	mw.geometry('450x400')
+	mw.title(_LangdefinitionDataDic['Robot Test Title'] + ' ' + _Version)
 
 #To Do Add R-go icon
 # mw.iconbitmap('Rgo.icon')
@@ -102,26 +117,27 @@ mw.resizable(0, 0) #Don't allow resizing in the x or y direction
 
 #region Site
 
-ttk.Label(mw, text = str(_LangdefinitionDataDic['Site Label']),anchor='w',justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+ttk.Label(mw, text = str(_LangdefinitionDataDic['Site Label']) +":",anchor='w',justify='left',
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 SiteCmb = tk.StringVar()
-st = ttk.Combobox(mw, width = 27,textvariable = SiteCmb)
+
+st = ttk.Combobox(mw, width = _cmbWidth,textvariable = SiteCmb)
 st['values'] = ('Hausvarna','Haifa','Holon')
-st.grid(column = 1, row = _row_num)
+st.grid(column = 1, row = _row_num,sticky = 'W')
 _row_num=_row_num+1
 #endregion Site
 
 #region Station
 
 ttk.Label(mw, text = _LangdefinitionDataDic['Station Label'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		font = (_BigFontFamily, _BigFontSize),width=_lblWidth).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
 StationCmb = tk.StringVar()
-stn = ttk.Combobox(mw, width = 27,textvariable = StationCmb)
+stn = ttk.Combobox(mw, width = _cmbWidth,textvariable = StationCmb)
 stn['values'] = ('1','2','3')
-stn.grid(column = 1, row = _row_num)
+stn.grid(column = 1, row = _row_num,sticky = 'W')
 
 
 _row_num=_row_num+1
@@ -130,13 +146,13 @@ _row_num=_row_num+1
 #region ModuleType
 if(_SelectModuleType):
 	ttk.Label(mw, text = _LangdefinitionDataDic['Module Type Label'],
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
 	ModuleTypeCmb = tk.StringVar()
-	module = ttk.Combobox(mw, width = 27,textvariable = ModuleTypeCmb)
+	module = ttk.Combobox(mw, width = _cmbWidth,textvariable = ModuleTypeCmb)
 	module['values'] = ('5','2','3')
-	module.grid(column = 1, row = _row_num)
+	module.grid(column = 1, row = _row_num,sticky = 'W')
 	module.current(1)
 	_row_num=_row_num+1
 #endregion
@@ -144,13 +160,13 @@ if(_SelectModuleType):
 #region Compute Type
 if(_TestType=="Housing Tests"):
 	ttk.Label(mw, text = _LangdefinitionDataDic['Compute Type'],justify='left',
-			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-			row = _row_num, padx = 10, pady = _gcmbPaddy)
+			font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+			row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
 	ComputeTypeCmb = tk.StringVar()
-	ComputeType = ttk.Combobox(mw, width = 27,textvariable = ComputeTypeCmb)
+	ComputeType = ttk.Combobox(mw, width = _cmbWidth,textvariable = ComputeTypeCmb)
 	ComputeType['values'] = ('1','2','9')
-	ComputeType.grid(column = 1, row = _row_num)
+	ComputeType.grid(column = 1, row = _row_num,sticky = 'W')
 	_row_num=_row_num+1
 #endregion
 
@@ -158,67 +174,79 @@ if(_TestType=="Housing Tests"):
 if(_RetrieveHousingSN):
 
 	ttk.Label(mw, text = _LangdefinitionDataDic['Housing SN'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
-	txtHousting = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
-		font = ("Times New Roman", 10))
-	txtHousting.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+	txtHousting = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = _lblWidth,
+		font = (_BigFontFamily, _BigFontSize))
+	txtHousting.grid(row=_row_num, column=1, pady=_gcmbPaddy,sticky = 'W')
 
-	btnBarcode = tk.Button(mw, text=_LangdefinitionDataDic['Barcode'], command=lambda: Button_Clicker(1),bg='blue', fg='white',
-		width=_BtnWidth).grid(column = 2, row =_row_num)
+	btnBarcode = tk.Button(mw, text=_LangdefinitionDataDic['Barcode'],justify='left', 
+			command=lambda: Button_Clicker(1),bg='blue', fg='white',
+			font = (_SmallFontFamily, _SmallFontSize),
+			width=_BtnWidth).grid(column = 2, row =_row_num,sticky = 'W')
 	_row_num=_row_num+1
 #endregion
 
 #region TLV SN
 if(_ReadTLVSN):
 	ttk.Label(mw, text = _LangdefinitionDataDic['TLVSN'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
-	txtTlvSn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
-		font = ("Times New Roman", 10))
-	txtTlvSn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
-	btnReadTlvSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
+	txtTlvSn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = _lblWidth,
+		font = (_BigFontFamily, _BigFontSize))
+	txtTlvSn.grid(row=_row_num, column=1, pady=_gcmbPaddy)
+	btnReadTlvSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'], 
+	font = (_SmallFontFamily, _SmallFontSize),
+	command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, 
+		row = _row_num,sticky = 'W')
 	_row_num=_row_num+1
 #endregion
 
 #region SOM S/N
 if(_ReadSOMSN):
 	ttk.Label(mw, text = _LangdefinitionDataDic['SOMSN'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
-	txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
-		font = ("Times New Roman", 10))
-	txtSomsn.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+	txtSomsn = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = _lblWidth,
+		font = (_BigFontFamily, _BigFontSize))
+	txtSomsn.grid(row=_row_num, column=1,padx=0, pady=_gcmbPaddy)
 	
-	btnReadSomSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+	btnReadSomSn = tk.Button(mw, text=_LangdefinitionDataDic['Read'],
+	font = (_SmallFontFamily, _SmallFontSize),
+	command=lambda: Button_Clicker(1),
+	bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num,sticky = 'W')
 	_row_num=_row_num+1
 #endregion
 
 #region Robot S/N
-if _ReadTLVSN:
+if (_SelectRobotType):
 
 	tk.Label(mw, text = _LangdefinitionDataDic['RobotSN'],justify='left',
-			font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-			row = _row_num, padx = 10, pady = _gcmbPaddy)
+			font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+			row = _row_num, padx = _PadX, pady = _gcmbPaddy)
 
 	RobotSN = tk.StringVar()
-	RobotSNCmb = ttk.Combobox(mw, width = 27,textvariable = RobotSN)
+	RobotSNCmb = ttk.Combobox(mw, width = _cmbWidth,textvariable = RobotSN)
 	RobotSNCmb['values'] = ('1','2','3')
-	RobotSNCmb.grid(column = 1, row = _row_num)
+	RobotSNCmb.grid(column = 1, row = _row_num,sticky = 'W')
 	_row_num=_row_num+1
 #endregion
 
 #region CameraOTP
 ttk.Label(mw, text = _LangdefinitionDataDic['Camera OTP Label'],justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
-btnReadCamOtp = tk.Button(mw, text=_LangdefinitionDataDic['Read'], command=lambda: Button_Clicker(1),bg='blue', fg='white',width=_BtnWidth).grid(column = 2, row = _row_num)
+		font = (_BigFontFamily, _BigFontSize)).grid(sticky = 'W',column = 0,
+		row = _row_num, padx = _PadX, pady = _gcmbPaddy)
+		
+btnReadCamOtp = tk.Button(mw, text=_LangdefinitionDataDic['Read'], 
+	font = (_SmallFontFamily, _SmallFontSize),
+	command=lambda: Button_Clicker(1),bg='blue', 
+	fg='white',width=_BtnWidth).grid(column = 2, row = _row_num,sticky = 'W')
 
-txtCameraOpt = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = 27,
-		font = ("Times New Roman", 10))
-txtCameraOpt.grid(row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+txtCameraOpt = tk.Label(mw, anchor='w',justify='left',borderwidth=2, relief="groove",width = _lblWidth,
+		font = (_BigFontFamily, _BigFontSize))
+txtCameraOpt.grid(row=_row_num, column=1,padx=0, pady=_gcmbPaddy)
 _row_num=_row_num+1
 #endregion
 
@@ -228,8 +256,14 @@ def RAndDOnlyTest():
 	mw.withdraw()
 	_lay.append(top)
 
-	top.title('R-Go ' + _LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
+	if(_TestType=="Module Calibration"):
+		top.title(_LangdefinitionDataDic['Module Calibration Title'] + ' ' + _Version)
+	elif _TestType=="Housing Tests":
+		top.title(_LangdefinitionDataDic['Housing Test Title'] + ' ' + _Version)
+	elif _TestType=="Robot Tests":	
+		top.title(_LangdefinitionDataDic['Robot Test Title'] + ' ' + _Version)
 	
+	#top.geometry(mw.winfo_geometry().width,660)
 	top.geometry('450x660')
 	
 	_scriptNameAndNumber=gTscr.JsonGetTestScriptFiles.ReadDefinisionFileNameAndNumber('DataFiles\Test_definition.json')
@@ -258,11 +292,11 @@ def RAndDOnlyTest():
 		
 		# count += 1	
 
-	btnTestStart = tk.Button(top, text='Save', command=lambda: SaveRAndDTesting()
+	btnTestStart = tk.Button(top, text=_LangdefinitionDataDic['Save'], command=lambda: SaveRAndDTesting()
 	,bg='blue', fg='white',width = 15)
 	btnTestStart.grid(row=rowNum+1, column=0)
 
-	btnTestStart = tk.Button(top, text='Cancel', command=lambda:exit_btn()
+	btnTestStart = tk.Button(top, text=_LangdefinitionDataDic['Cancel'], command=lambda:exit_btn()
 	,bg='Red', fg='white',width = 15)
 	btnTestStart.grid(row=rowNum+1, column=1)
 
@@ -308,60 +342,108 @@ def StartTesting():
 	
 	_lay.append(top)
 	_row_num:int=0
-
+	rootHeight = mw.winfo_height()+20
+	rootWidth = mw.winfo_width()
 	mw.withdraw()
-	
-	top.geometry(mw.winfo_geometry())
+	lv_x = mw.winfo_rootx()
+	lv_y = mw.winfo_rooty()
+	top.geometry(str(mw.winfo_width()) +'x' + str(mw.winfo_height()+20))
+	top.resizable(False, False)
 
-	
-	top.title("Calibration in progress...")
-	
-	# top.geometry('320x300')
-
-	if _TestType=="Housing Tests":
-		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['CalibreationInprogress'],anchor='w',justify='left',
+	top.columnconfigure(0, weight=1)
+	top.columnconfigure(1, weight=3)
+	if _TestType=="Module Calibration":
+		top.title(_LangdefinitionDataDic['Module Calibration Title'])
+		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['CalibreationInprogress'],
+		anchor='w',justify='left',
 			font = ("Times New Roman", 20))
-	else:
+	elif _TestType=="Housing Tests":
+		top.title(_LangdefinitionDataDic['Housing Test Title'])
 		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['Testing in progress'],anchor='w',justify='left',
 			font = ("Times New Roman", 20))
-	
-	Headerlbl.grid(sticky = 'W',column = 0,row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	elif _TestType=="Robot Tests":
+		top.title(_LangdefinitionDataDic['Robot Test Title'])
+		Headerlbl=ttk.Label(top, text = _LangdefinitionDataDic['Testing in progress'],anchor='w',justify='left',
+			font = ("Times New Roman", 20))
+	# top.geometry('320x300')
+
+	# configure the grid
+	top.columnconfigure(0, weight=1)
+	top.columnconfigure(1, weight=1)
+	top.columnconfigure(2, weight=1)
+	top.columnconfigure(3, weight=1)
+
+	Headerlbl.grid(sticky = 'W',column = 0,row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=4)
+
 	_row_num+=1
 
+	#Frame
+	
+	
+	lf = ttk.LabelFrame(top)
+	lf.grid(sticky = 'EW',column=0, row=_row_num, ipadx=10, ipady=10,columnspan=4)
+	
+	#end farame
 	if(_RetrieveHousingSN):
-		Housinglbl=ttk.Label(top, text = _LangdefinitionDataDic['Housing SN'] +_CameraOTP,justify='left',
-			font = ("Times New Roman", 10))
+		Housinglbl=ttk.Label(lf, text = _LangdefinitionDataDic['Housing SN']+":",justify='left',
+			font = (_BigFontFamily, _BigFontSize))
 			
-		Housinglbl.grid(sticky = 'W',column = 0,
-			row = _row_num, padx = 10, pady = _gcmbPaddy)		
+		Housinglbl.grid(sticky = 'w',column = 0,
+			row = _row_num, padx = 1, pady = _gcmbPaddy)		
 
+		HousinglblData=ttk.Label(lf, text = _CameraOTP,justify='left',anchor='c',
+			font = (_BigFontFamily, _BigFontSize),borderwidth=4, relief="solid")
+		
+		HousinglblData.grid(column = 1,
+			row = _row_num, padx = 10, pady = 5,ipadx=5)
+	
 	if(_ReadTLVSN):
-		ttk.Label(top, text = _LangdefinitionDataDic['TLVSN'] +_CameraOTP,justify='left',
-		font = ("Times New Roman", 10)).grid(sticky = 'W',column = 1,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)
+		ReadTLVSNlbl=ttk.Label(lf, text = _LangdefinitionDataDic['TLVSN'] +":",justify='left',
+		font = (_BigFontFamily, _BigFontSize))
+
+		ReadTLVSNlbl.grid(sticky = 'W',column = 2,
+		row = _row_num, padx = 1, pady = _gcmbPaddy)
+
+		ReadTLVSNlblData=ttk.Label(lf, text = _CameraOTP,justify='left',anchor='c',
+		font = (_BigFontFamily, _BigFontSize),borderwidth=2, relief="solid")
+		
+		ReadTLVSNlblData.grid(sticky = 'W',column = 3,
+		row = _row_num, padx = 0, pady = 5,ipadx=5)
+
 		_row_num+=1
 
 	
 
 	if(_ReadSOMSN):
-		txtSomsn = tk.Label(top, text = _LangdefinitionDataDic['SOMSN'] +_CameraOTP,anchor='w',
+		txtSomsn = ttk.Label(lf, text = _LangdefinitionDataDic['SOMSN'] +":",anchor='w',
 			justify='left',
-		font = ("Times New Roman", 10))		
-		txtSomsn.grid(sticky = 'W',row=_row_num, column=1,padx=10, pady=_gcmbPaddy)
+		font = (_BigFontFamily, _BigFontSize))		
+		txtSomsn.grid(sticky = 'W',row=_row_num, column=2,padx=0, pady=5)
 
-	CameraOTPlbl=ttk.Label(top, text = _LangdefinitionDataDic['Camera OTP Label'] +_CameraOTP ,anchor='w',justify='left',
-		font = ("Times New Roman", 10))
+		txtSomsnData = ttk.Label(lf, text = _CameraOTP,anchor='c',
+			justify='left',
+		font = (_BigFontFamily, _BigFontSize),borderwidth=2, relief="solid")	
+
+		txtSomsnData.grid(sticky = 'W',row=_row_num, column=3,padx=0, pady=5,ipadx=5)
+
+	CameraOTPlbl=ttk.Label(lf, text = _LangdefinitionDataDic['Camera OTP Label'] +":"
+	,anchor='c',justify='left',
+		font = (_BigFontFamily, _BigFontSize))
 
 	CameraOTPlbl.grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy)	
+		row = _row_num, padx = 0, pady = 0)
+
+	CameraOTPlblData=ttk.Label(lf, text = _CameraOTP 
+	,anchor='c',justify='left',
+		font = (_BigFontFamily, _BigFontSize),borderwidth=2, relief="solid")
+
+	CameraOTPlblData.grid(sticky = 'W',column = 1,
+		row = _row_num, padx = 10, pady = 0,ipadx=5)
+
+
 
 	_row_num+=1
 	
-	
-	# progress = ttk.Progressbar(top, orient = tk.HORIZONTAL,
-	# 		length = 300, mode = 'determinate')
-	# progress.grid(column = 0,
-	# 		row = 2, padx = 10, pady = 10,columnspan=2)
 
 	#region progress bar Style
 	style = ttk.Style(top)
@@ -374,138 +456,158 @@ def StartTesting():
 	style.configure('text.Horizontal.TProgressbar', text='0 %')
 	#endregion progress bar Style
 	
-	progress = ttk.Progressbar(top, style='text.Horizontal.TProgressbar', length=200,
+	progress = ttk.Progressbar(top, style='text.Horizontal.TProgressbar', length=400,
                                maximum=_Eta, value=0)
 
-	progress.grid(column = 0,row = _row_num, padx = 10, pady = 10,columnspan=2)						   
+	progress.grid(column = 0,row = _row_num, padx = 10, pady = 10,columnspan=4)						   
 
 	_row_num+=1
 
-	ETAlbl=ttk.Label(top, text = "ETA :",justify='center',
-		font = ("Times New Roman", 15))	
+	ETAlbl=ttk.Label(top, text =_LangdefinitionDataDic['ETA'] + ":",justify='center',
+		font = (_BigFontFamily, _BigFontSize))	
 
-	ETAlbl.grid(sticky = 'W',column = 0,
-		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	ETAlbl.grid(sticky = 'EW',column = 2,
+		row = _row_num, padx = 0, pady = 0)
 	
 	ElapsetTimelbl=ttk.Label(top, text = str(_Eta)  ,anchor='w',justify='left',
-		font = ("Times New Roman", 15))
-	ElapsetTimelbl.grid(sticky = 'W',column = 1,
-		row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+		font = (_BigFontFamily, _BigFontSize))
+	ElapsetTimelbl.grid(sticky = 'EW',column = 3,
+		row = _row_num, padx = 0, pady = 0)
 	
 	_row_num+=1
 
 	ETAlblMinSecWarning=ttk.Label(top, text = "",justify='center',
-	font = ("Times New Roman", 20))
+	font = (_BigFontFamily, _BigFontSize),wraplength=400)
 
-	ETAlblMinSecWarning.grid(sticky = 'W',column = 0,
-	row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=2)
+	ETAlblMinSecWarning.grid(sticky = 'EW',column = 0,
+	row = _row_num, padx = 10, pady = _gcmbPaddy,columnspan=4)
 
 	_row_num+=1
 
-	btn = tk.Button(top,text='Cancel',command=exit_btn,bg='red', fg='white',width = 8,anchor="c")
-	btn.grid(row = _row_num,column = 0, sticky="nsew",padx = 10)
+	btnCancel = tk.Button(top,text =_LangdefinitionDataDic['Cancel'],command=exit_btn,bg='red', 
+			fg='white',anchor="c",width = 10,height=1,font = (_BigFontFamily, _BigFontSize))
 
-	btn2 = tk.Button(top,text='Done',bg='gray', fg='white',width = 8,anchor="c",command=exit_btn,state='disabled')
-	btn2.grid(row = _row_num,column = 1,sticky="nsew",padx = 10)
+	btnCancel.grid(row = _row_num,column = 0, padx = 10,columnspan=2,sticky = 'W')
 
-	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btn2,ETAlblMinSecWarning))
+	btnDone = tk.Button(top,text = _LangdefinitionDataDic['Done'],bg='gray', fg='white',
+		anchor="c",command=exit_btn,state='disabled',
+		width = 10,height=1,font = (_BigFontFamily, _BigFontSize))
+
+	btnDone.grid(row = _row_num,column = 2,padx = 10,columnspan=2,sticky = 'E')
+
+	th = threading.Thread(target=bar, args=(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,btnDone,
+	ETAlblMinSecWarning,btnCancel))
 	th.start()
 	#bar(top,progress)
 
 #region progress
 def bar(top,progress,ElapsetTimelbl,style,Headerlbl,ETAlbl,
-		btn2,ETAlblMinSecWarning):
+		btn2,ETAlblMinSecWarning,btn):
 	# import queue
 	global _Eta
 	TestPass:bool=True
+	PopFlag:bool=True
+	dotindex:int=0
 	runthreads = []	
 	elapsedTime=0
 	inetvalPB=_Eta		
 	TestIndex=0	
 	#region Run all Test Scripts
-	for script in _scriptDataSrc:				
-		specName =script.split('.')
-		print(script)		
-		#region load class Dynamic by Reflection
-		test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
-		test_module = importlib.util.module_from_spec(test_spec)		
-		test_spec.loader.exec_module(test_module)
-		print(test_module.RetVal)
-		#create instance of the class
-		ScriptClass = test_module.Test()		
-		#endregion		
-		#region Thread run
-		sThrd = threading.Thread(target=ScriptClass.RunTest)	
-		sThrd.start()		
-		runthreads.append(sThrd)
-		#endregion
-		CurrentTestTime=0
-		StartEtaTime=elapsedTime
-		StartinetvalPB=inetvalPB
-		# print(str(_scriptRunTime[TestIndex]))
+	for script in _scriptDataSrc:
+		if PopFlag==True:
+			PopFlag=False				
+			specName =script.split('.')
+			print(script)		
+			#region load class Dynamic by Reflection
+			test_spec = importlib.util.spec_from_file_location(specName[0], 'CallibrationTestScriptFile\\' + script)
+			test_module = importlib.util.module_from_spec(test_spec)		
+			test_spec.loader.exec_module(test_module)
+			print(test_module.RetVal)
+			#create instance of the class
+			ScriptClass = test_module.Test()		
+			#endregion		
+			#region Thread run
+			sThrd = threading.Thread(target=ScriptClass.RunTest)	
+			sThrd.start()		
+			runthreads.append(sThrd)
+			#endregion
+			CurrentTestTime=0
+			StartEtaTime=elapsedTime
+			StartinetvalPB=inetvalPB
+			# print(str(_scriptRunTime[TestIndex]))
 		#region Thread Loop 
 		while len(runthreads) >0:	
 			CurrentTestTime+=1		
 			elapsedTime=elapsedTime+1
 			inetvalPB=inetvalPB-1
 			#print(str(CurrentTestTime))			
-			# if(CurrentTestTime<=_scriptRunTime[TestIndex]):
-			newTime=str(int(inetvalPB/60))+ " Min :"
-			# 'calc time str'
-			if (int((inetvalPB%60)))>0:
-				newTime+=str((int((inetvalPB%60)))) + " Sec"			  
-			else:
-				newTime+="0" + str((int((inetvalPB%60))))
+			if(CurrentTestTime<=_scriptRunTime[TestIndex]):
+				newTime=str(int(inetvalPB/60))+ " " + _LangdefinitionDataDic['MinuteLabel'] +" :"
+				# 'calc time str'
+				if (int((inetvalPB%60)))>0:
+					newTime+=str((int((inetvalPB%60)))) + " " + _LangdefinitionDataDic['SecondsLabel']			  
+				else:
+					newTime+="0" + str((int((inetvalPB%60))))
 
-			if inetvalPB>59:
-				ElapsetTimelbl['text'] =str(newTime)
-				# ElapsetTimelbl['text'] =str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
-			else:
-				if inetvalPB>0:
-					ElapsetTimelbl['text'] = str(inetvalPB) + ' Seconds'
-			if(elapsedTime<=_Eta-2):
-				percentage = round(elapsedTime/_Eta * 100)  # Calculate percentage.
-				progress.config(value=elapsedTime)
-				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(percentage))
-				# print(str(elapsedTime))
-			else:
-				progress.config(value=100)
-				style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))	
+				if inetvalPB>59:
+					ElapsetTimelbl['text'] =str(newTime)
+					# ElapsetTimelbl['text'] =str(inetvalPB) + 'sec or '  + str(int(inetvalPB/60)) + ' Minutes'
+				else:
+					if inetvalPB>0:
+						ElapsetTimelbl['text'] = str(inetvalPB) + " " + _LangdefinitionDataDic['SecondsLabel']
+				if(elapsedTime<=_Eta-2):
+					percentage = round(elapsedTime/_Eta * 100)  # Calculate percentage.
+					progress.config(value=elapsedTime)
+					style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(percentage))
+					# print(str(elapsedTime))
+				else:
+					progress.config(value=100)
+					style.configure('text.Horizontal.TProgressbar', text='{:g} %'.format(100))	
 				
-			# else:#'test time taking longer than expected'
-			# 	ETAlblMinSecWarning['text']=str('test time taking longer than expected')+"."
-
+			else:#'test time taking longer than expected'				
+				if(dotindex==0):
+					ETAlblMinSecWarning.config(text=_LangdefinitionDataDic['LongTetsTime'],foreground='red')
+					dotindex+=1
+				else:
+					ETAlblMinSecWarning.config(text=ETAlblMinSecWarning["text"]+'.')					
+					if(dotindex>3):
+						dotindex=0
+					else:
+						dotindex+=1
+					
 			time.sleep(1)
 			for thread in runthreads:
 				if not thread.is_alive():				
 					runthreads.pop(0)
-					print('pop')
+					PopFlag=True
 			#endregion
-			if(test_module.RetVal!='Pass'):
-				TestPass=False			
-				if(_RetryOnFailyre==False):
-					break
-			else:
-				gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionSuccessTime('DataFiles\Test_definition.json',
-					CurrentTestTime,script)
+		if(test_module.RetVal!='Pass'):
+			TestPass=False			
+			if(_RetryOnFailyre==False):
+				break
+		else:
+			gTscr.JsonGetTestScriptFiles.UpdateJsonDefinitionSuccessTime('DataFiles\Test_definition.json',
+				CurrentTestTime,script)
 			
 		print(test_module.RetVal)				
 		#in case that the test take longer from that expected
 		#or case that the test was  shorter from that expected
 		if(CurrentTestTime>_scriptRunTime[TestIndex] or 
 			CurrentTestTime<_scriptRunTime[TestIndex]):
+			dotindex=0
+			ETAlblMinSecWarning.config(text='')
 			elapsedTime=StartEtaTime+int(_scriptRunTime[TestIndex])
 			inetvalPB=StartinetvalPB-int(_scriptRunTime[TestIndex])
 		TestIndex=TestIndex+1
 	#endregion
 	if(TestPass):
-		ElapsetTimelbl.config(text='Pass',foreground='green')
+		ElapsetTimelbl.config(text=_LangdefinitionDataDic['Pass'],foreground='green')
 	else:
-		ElapsetTimelbl.config(text='Fail',foreground='red')
-	ETAlbl.config(text="Result")
-	Headerlbl.config(text='Calibration completed')
+		ElapsetTimelbl.config(text=_LangdefinitionDataDic['Fail'],foreground='red')
+	ETAlbl.config(text=_LangdefinitionDataDic['Result'])
+	Headerlbl.config(text=_LangdefinitionDataDic['Calibration completed'])
 	btn2.config(state='normal',bg='green')
-	
+	btn.config(state='disabled',bg='gray')
 #endregion
 #region run Py test Script
 def RunTestScript(path_name:str):
@@ -534,15 +636,16 @@ def Button_Clicker(newnum):
 if(_showRDBtn):
 	btnRDOnly = tk.Button(mw, 
 	command=lambda: RAndDOnlyTest(),bg='#009999',
-	 fg='white',width=_BtnWidth)
-	btnRDOnly.grid(column = 0, row = _row_num)
+	 fg='white',width = 10,height=1,font = (_BigFontFamily, _BigFontSize))
+	btnRDOnly.grid(column = 0, row = _row_num,sticky = 'W',padx=10)
 	btnRDOnly.config(text=_LangdefinitionDataDic['RAndDOnly'])
 	
 
 
 btnTestStart = tk.Button(mw, text=_LangdefinitionDataDic['Calibrate'], 
  command=lambda: StartTesting(),bg='green',
- fg='white',width = 15).grid(row=_row_num, column=1, columnspan=2)
+ fg='white',width = 12,height=1,font = (_BigFontFamily, _BigFontSize)).grid(row=_row_num, column=1, 
+ 	columnspan=2,sticky = 'SE')
 
 _row_num=_row_num+1
 #endregion
